@@ -1,9 +1,9 @@
 # Onfleet Python Wrapper
 
 ![Travis (.org)](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
-![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)
-![PyPI - Status](https://img.shields.io/pypi/status/pyonfleet.svg?style=popout-square)
+[![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
+[![PyPI - Status](https://img.shields.io/pypi/status/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
 *Read this document in another language: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md), [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
@@ -38,7 +38,7 @@ The Onfleet Python library provides convenient access to the Onfleet API.
 ## Installation
 
 ```
-pip install python_onfleet
+pip install pyonfleet
 ```
 ## Usage
 Before using the API wrapper, you will need to obtain an API key from your organization admin. Creation and integration of API keys are performed through the [Onfleet dashboard](https://onfleet.com/dashboard#/manage).

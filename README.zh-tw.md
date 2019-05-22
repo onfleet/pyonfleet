@@ -36,7 +36,7 @@
 ## 安裝
 
 ```
-pip install python_onfleet
+pip install pyonfleet
 ```
 
 ## 使用守則
