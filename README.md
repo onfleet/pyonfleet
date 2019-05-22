@@ -1,10 +1,16 @@
 # Onfleet Python Wrapper
+
+![Travis (.org)](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
+![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square))
+
 *Read this document in another language: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md), [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
 If you have any questions, please reach out to Onfleet by submitting an issue [here](https://github.com/onfleet/pyonfleet/issues) or contact support@onfleet.com
 
 ## Table of Contents
 - [Onfleet Python Wrapper](#onfleet-python-wrapper)
+  * [Table of Contents](#table-of-contents)
   * [Synopsis](#synopsis)
   * [Installation](#installation)
   * [Usage](#usage)
@@ -13,14 +19,16 @@ If you have any questions, please reach out to Onfleet by submitting an issue [h
     + [Supported CRUD Operations](#supported-crud-operations)
       - [GET Requests](#get-requests)
         * [Examples of get()](#examples-of-get--)
-        * [Examples of get()](#examples-of-get--)
+        * [Examples of get(param)](#examples-of-get-param-)
+        * [Examples of getByLocation:](#examples-of-getbylocation-)
       - [POST Requests](#post-requests)
         * [Examples of create()](#examples-of-create--)
       - [PUT Requests](#put-requests)
         * [Examples of update()](#examples-of-update--)
+        * [Examples of updateSchedule()](#examples-of-updateschedule--)
+        * [Examples of insertTask()](#examples-of-inserttask--)
       - [DELETE Requests](#delete-requests)
         * [Examples of deleteOne()](#examples-of-deleteone--)
-    + [Examples of utilizing your CRUD operations](#examples-of-utilizing-your-crud-operations)
 
 ## Synopsis
 
@@ -40,7 +48,6 @@ The format of `.auth.json` is shown below:
 ```json
 {
     "API_KEY": "<your_api_key>", 
-    "API_SECRET": "<your_api_secret>" // Not supported now, empty string "" will suffice
 }
 ```
 You can also opt in to not store your API key here and use it on the fly instead.
@@ -57,12 +64,12 @@ api = Onfleet(api_key="<your_api_key>") # if no .auth.json was provided
 Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys, learn more about it [here](http://docs.onfleet.com/docs/throttling). 
 
 ### Responses
-The `pyonfleet` API wrapper returns a [Response object](https://2.python-requests.org//en/master/api/#requests.Response), where headers and other information are stored. To access the results of the response, simply parse it as JSON using the [json() method](https://developer.mozilla.org/en-US/docs/Web/API/Body/json).
+The `pyonfleet` API wrapper returns the body of a [Response object](https://2.python-requests.org//en/master/api/#requests.Response).
 
 ### Supported CRUD Operations 
 The base URL for the Onfleet API is `https://onfleet.com/api/v2`, here are the supported CRUD operations for each endpoint:
 
-|  | GET | POST | PUT | DELETE |
+| `<endpoint>` | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
 | [Admins](http://docs.onfleet.com/docs/administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
 | [Containers](http://docs.onfleet.com/docs/containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
@@ -99,7 +106,7 @@ To get one of the document within an endpoint, specify the param that you wish t
 get(param=<some_param>)
 ```
 
-##### Examples of get() 
+##### Examples of get(param) 
 ```python
 api.workers.get(id="<24_digit_id>")
 api.workers.get(id="<24_digit_id>", queryParams={"analytics": "true"})
@@ -111,8 +118,12 @@ api.containers.get(workers="<worker_id>")
 api.containers.get(teams="<team_id>")
 api.containers.get(organizations="<org_id>")
 ```
+To get a driver by location, use the `getByLocation` function:
+```python
+getByLocation(queryParams=<some_param>)
+```
 
-##### Special endpoints - getByLocation using JSON query parameters:
+##### Examples of getByLocation:
 ```python
 params = {"longitude":"-122.4","latitude":"37.7601983","radius":"6000"}
 api.workers.getByLocation(queryParams=params)
@@ -162,6 +173,16 @@ updateBody = {
     "name": "New Driver Name",
 }
 api.workers.update(id="<24_digit_id>", body=updateBody)
+```
+##### Examples of updateSchedule()
+```python
+api.workers.updateSchedule(id="<24_digit_id>", body=newSchedule)
+```
+For more details, check our documentation on [updateSchedule](http://docs.onfleet.com/docs/workers#update-workers-schedule)
+
+##### Examples of insertTask()
+```python
+api.workers.insertTask(id="kAQ*G5hnqlOq4jVvwtGNuacl", body="<body_object>")
 ```
 
 #### DELETE Requests
