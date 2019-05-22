@@ -3,7 +3,7 @@
 ![Travis (.org)](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
 [![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
-[![PyPI - Status](https://img.shields.io/pypi/status/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
+[![PyPI](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
 *Read this document in another language: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md), [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
