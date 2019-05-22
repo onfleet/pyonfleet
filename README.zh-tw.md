@@ -1,4 +1,10 @@
 # Onfleet Python Wrapper
+
+![Travis (.org)](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
+[![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
+![GitHub top language](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
+
 *其他語言版本: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md),[正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
 如果對於Onfleet應用程式介面或是我們產品有任何的問題，歡迎在此留言或直接聯繫 support@onfleet.com。
@@ -12,14 +18,15 @@
     + [請求回應](#請求回應)
     + [支援的CRUD操作](#支援的CRUD操作)
       - [GET 請求](#get-請求)
-        * [展示所有資源的範例](#展示所有資源的範例)
-        * [展示指定資源的範例](#展示指定資源的範例)
+        * [使用get展示所有資源的範例](#使用get展示所有資源的範例)
+        * [使用get展示指定資源的範例](#使用get展示指定資源的範例)
       - [POST 請求](#post-請求)
-        * [提交指定資源的範例](#提交指定資源的範例)
+        * [使用create提交指定資源的範例](#使用create提交指定資源的範例)
       - [PUT 請求](#put-請求)
-        * [取代指定資源的範例](#取代指定資源的範例)
+        * [使用update取代指定資源的範例](#使用update取代指定資源的範例)
+        * [使用insertTask取代指定資源的範例](#使用insertTask取代指定資源的範例)
       - [DELETE 請求](#delete-請求)
-        * [刪除指定資源的範例](#刪除指定資源的範例)
+        * [使用deleteOne刪除指定資源的範例](#使用deleteone刪除指定資源的範例)
 
 
 ## 概要
@@ -29,7 +36,7 @@
 ## 安裝
 
 ```
-pip install python_onfleet
+pip install pyonfleet
 ```
 
 ## 使用守則
@@ -42,7 +49,6 @@ pip install python_onfleet
 ```json
 {
     "API_KEY": "<你的API金鑰>", 
-    "API_SECRET": "<你的API密碼>" //這部分目前沒有支援，設定為空白字串""
 }
 ```
 當Onfleet物件成功被創建，而金鑰又是合法的，您會獲得訪問以下各endpoint資源的函式。欲獲得各endpoint資源的定義，請洽[Onfleet官方應用程式介面文件](http://docs.onfleet.com/)。
@@ -59,12 +65,12 @@ api = Onfleet(api_key="<your_api_key>") #直接引入參數
 原則上API的速限為每秒鐘20次請求，詳情請參考[官方文件](http://docs.onfleet.com/docs/throttling)。
 
 ### 請求回應
-`pyonfleet`所回應的物件為一[Response物件](https://2.python-requests.org//en/master/api/#requests.Response)，在此物件中，許多的附帶訊息用於提供給client端更多資訊。若欲取得回應的數據，請在回應的物件中執行[json()](https://developer.mozilla.org/en-US/docs/Web/API/Body/json)即可獲得JSON化的請求結果。
+`pyonfleet`所回應的物件為一[Response物件](https://2.python-requests.org//en/master/api/#requests.Response)的本體。
 
 ### 支援的CRUD操作
 Onfleet應用程式介面的基本URL為 `https://onfleet.com/api/v2`，下面為各endpoint所支援的函式列表：
 
-|  | GET | POST | PUT | DELETE |
+| `<endpoint>` | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
 | [Admins](http://docs.onfleet.com/docs/administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
 | [Containers](http://docs.onfleet.com/docs/containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
@@ -82,7 +88,7 @@ Onfleet應用程式介面的基本URL為 `https://onfleet.com/api/v2`，下面�
 ```python
 get()
 ```
-##### 展示所有資源的範例
+##### 使用get展示所有資源的範例
 ```python
 api.workers.get()
 api.workers.get(queryParams="")
@@ -97,7 +103,7 @@ api.workers.get(queryParams="phones=<phone_number>")
 get(param=<some_param>)
 ```
 
-##### 展示指定資源的範例
+##### 使用get展示指定資源的範例
 ```python
 api.workers.get(id="<24_digit_id>")
 api.workers.get(id="<24_digit_id>", queryParams={"analytics": "true"})
@@ -115,7 +121,7 @@ api.containers.get(organizations="<org_id>")
 ```python
 create(body="<body_object>")
 ```
-##### 提交指定資源的範例
+##### 使用create提交指定資源的範例
 ```python
 driver = {
   "name": "A Swartz Test",
@@ -148,7 +154,7 @@ api.workers.setSchedule(id="<24_digit_id>", body="<schedule_object>")
 ```python
 update(id="<24_digit_id>", body="<body_object>")
 ```
-##### 取代指定資源的範例
+##### 使用update取代指定資源的範例
 ```python
 updateBody = {
     "name": "New Driver Name",
@@ -161,12 +167,17 @@ api.workers.updateSchedule(id="<24_digit_id>", body=newSchedule)
 ```
 參考資料：[updateSchedule](http://docs.onfleet.com/docs/workers#update-workers-schedule)
 
+##### 使用insertTask取代指定資源的範例
+```python
+api.workers.insertTask(id="kAQ*G5hnqlOq4jVvwtGNuacl", body="<body_object>")
+```
+
 #### DELETE 請求
 刪除某單一指定資源的指令如下:
 ```python
 deleteOne(id="<24_digit_id>")
 ```
-##### 刪除指定資源的範例
+##### 使用deleteOne刪除指定資源的範例
 ```python
 api.workers.deleteOne(id="<24_digit_id>")
 ```
