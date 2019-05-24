@@ -4,7 +4,7 @@
 [![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 ![GitHub top language](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
-[![Downloads](https://pepy.tech/badge/pyonfleet)](https://pepy.tech/project/pyonfleet)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
 *Read this document in another language: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md), [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
