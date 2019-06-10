@@ -8,10 +8,11 @@
 
 *其他語言版本: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md),[正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
-如果對於Onfleet應用程式介面或是我們產品有任何的問題，歡迎在此留言或直接聯繫 support@onfleet.com。
+欲了解本開源專案的背景，請參閱[我們的部落格](https://onfleet.com/blog/api-wrappers-explained/)，如果對於Onfleet應用程式介面或是我們產品有任何的問題，歡迎[在此留言](https://github.com/onfleet/pyonfleet/issues)或直接聯繫 support@onfleet.com。
 
 ## 目錄
 - [Onfleet Python Wrapper](#onfleet-python-wrapper)
+  * [目錄](#目錄)
   * [概要](#概要)
   * [安裝](#安裝)
   * [使用守則](#使用守則)
