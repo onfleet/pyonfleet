@@ -5,4 +5,4 @@ cache: pip
 install:
   - pip install -r requirements.txt
 script:
-  - python test/test_onfleet.py
+  # - python test/test_onfleet.py
