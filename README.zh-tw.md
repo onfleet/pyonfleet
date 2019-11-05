@@ -64,7 +64,7 @@ api = Onfleet() #有.auth.json檔案的前提
 api = Onfleet(api_key="<your_api_key>") #直接引入參數
 ```
 ### API速限
-原則上API的速限為每秒鐘20次請求，詳情請參考[官方文件](http://docs.onfleet.com/docs/throttling)。
+原則上API的速限為每秒鐘20次請求，詳情請參考[官方文件](https://docs.onfleet.com/reference#throttling)。
 
 ### 請求回應
 `pyonfleet`所回應的物件為一[Response物件](https://2.python-requests.org//en/master/api/#requests.Response)的本體。
@@ -74,16 +74,16 @@ Onfleet應用程式介面的基本URL為 `https://onfleet.com/api/v2`，下面�
 
 | `<endpoint>` | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
-| [Admins](http://docs.onfleet.com/docs/administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
-| [Containers](http://docs.onfleet.com/docs/containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
-| [Destinations](http://docs.onfleet.com/docs/destinations) | get(id) | create(body) | x | x |
-| [Hubs](http://docs.onfleet.com/docs/hubs) | get() | x | x | x |
-| [Organization](http://docs.onfleet.com/docs/organizations) | get(), get(id) | x | insertTask(id, body) | x |
-| [Recipients](http://docs.onfleet.com/docs/recipients)  | get(id), get(name), get(phone) | create(body) | update(id, body) | x |
-| [Tasks](http://docs.onfleet.com/docs/tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body) | update(id, body) | deleteOne(id) |
-| [Teams](http://docs.onfleet.com/docs/teams) | get(), get(id) | create(body) | update(id, body), insertTask(id, body) | deleteOne(id) |
-| [Webhooks](http://docs.onfleet.com/docs/webhooks) | get() | create(body) | x | deleteOne(id) |
-| [Workers](http://docs.onfleet.com/docs/workers) | get(), get(queryParams), get(id), getByLocation(queryParams), getSchedule(id) | create(body), setSchedule(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
+| [Admins](https://docs.onfleet.com/reference#administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
+| [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
+| [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body) | x | x |
+| [Hubs](https://docs.onfleet.com/reference#hubs) | get() | x | x | x |
+| [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
+| [Recipients](https://docs.onfleet.com/reference#recipients)  | get(id), get(name), get(phone) | create(body) | update(id, body) | x |
+| [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body) | update(id, body) | deleteOne(id) |
+| [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id) | create(body) | update(id, body), insertTask(id, body) | deleteOne(id) |
+| [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
+| [Workers](https://docs.onfleet.com/reference#workers) | get(), get(queryParams), get(id), getByLocation(queryParams), getSchedule(id) | create(body), setSchedule(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 
 #### GET 請求
 展示所有資源的指令如下：
@@ -149,7 +149,7 @@ api.tasks.autoAssign(body="<auto_assign_object>")
 
 api.workers.setSchedule(id="<24_digit_id>", body="<schedule_object>")
 ```
-參考資料：[clone](http://docs.onfleet.com/docs/tasks#clone-task), [forceComplete](http://docs.onfleet.com/docs/tasks#complete-task), [batchCreate](http://docs.onfleet.com/docs/tasks#create-tasks-in-batch), [autoAssign](http://docs.onfleet.com/docs/tasks#automatically-assign-get-of-tasks)以及[setSchedule](http://docs.onfleet.com/docs/workers#set-workers-schedule).
+參考資料：[clone](https://docs.onfleet.com/reference#clone-task), [forceComplete](https://docs.onfleet.com/reference#complete-task), [batchCreate](https://docs.onfleet.com/reference#create-tasks-in-batch), [autoAssign](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), 以及[setSchedule](https://docs.onfleet.com/reference#set-workers-schedule)
 
 #### PUT 請求
 取代（更新）某單一指定資源的指令如下:
@@ -167,7 +167,7 @@ api.workers.update(id="<24_digit_id>", body=updateBody)
 ```python
 api.workers.updateSchedule(id="<24_digit_id>", body=newSchedule)
 ```
-參考資料：[updateSchedule](http://docs.onfleet.com/docs/workers#update-workers-schedule)
+參考資料：[updateSchedule](https://docs.onfleet.com/reference#update-workers-schedule)
 
 ##### 使用insertTask取代指定資源的範例
 ```python
