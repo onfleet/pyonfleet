@@ -4,10 +4,11 @@
 [![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 ![GitHub top language](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
 *Read this document in another language: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md), [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
 
-If you have any questions, please reach out to Onfleet by submitting an issue [here](https://github.com/onfleet/pyonfleet/issues) or contact support@onfleet.com
+Visit our [blog post on the API wrapper project](https://onfleet.com/blog/api-wrappers-explained/) to learn more about our initiatives. If you have any questions, please reach out to Onfleet by submitting an issue [here](https://github.com/onfleet/pyonfleet/issues) or contact support@onfleet.com
 
 ## Table of Contents
 - [Onfleet Python Wrapper](#onfleet-python-wrapper)
@@ -19,17 +20,17 @@ If you have any questions, please reach out to Onfleet by submitting an issue [h
     + [Responses](#responses)
     + [Supported CRUD Operations](#supported-crud-operations)
       - [GET Requests](#get-requests)
-        * [Examples of get()](#examples-of-get--)
-        * [Examples of get(param)](#examples-of-get-param-)
-        * [Examples of getByLocation:](#examples-of-getbylocation-)
+        * [Examples of get()](#examples-of-get)
+        * [Examples of get(param)](#examples-of-get-param)
+        * [Examples of getByLocation:](#examples-of-getbylocation)
       - [POST Requests](#post-requests)
-        * [Examples of create()](#examples-of-create--)
+        * [Examples of create()](#examples-of-create)
       - [PUT Requests](#put-requests)
-        * [Examples of update()](#examples-of-update--)
-        * [Examples of updateSchedule()](#examples-of-updateschedule--)
-        * [Examples of insertTask()](#examples-of-inserttask--)
+        * [Examples of update()](#examples-of-update)
+        * [Examples of updateSchedule()](#examples-of-updateschedule)
+        * [Examples of insertTask()](#examples-of-inserttask)
       - [DELETE Requests](#delete-requests)
-        * [Examples of deleteOne()](#examples-of-deleteone--)
+        * [Examples of deleteOne()](#examples-of-deleteone)
 
 ## Synopsis
 
@@ -53,7 +54,7 @@ The format of `.auth.json` is shown below:
 ```
 You can also opt in to not store your API key here and use it on the fly instead.
 
-Once the Onfleet object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](http://docs.onfleet.com/). Here are some usage case:
+Once the Onfleet object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/). Here are some usage case:
 ```python
 from onfleet import Onfleet
 
@@ -62,7 +63,7 @@ api = Onfleet(api_key="<your_api_key>") # if no .auth.json was provided
 ```
 
 ### Throttling
-Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys, learn more about it [here](http://docs.onfleet.com/docs/throttling). 
+Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys, learn more about it [here](https://docs.onfleet.com/reference#throttling). 
 
 ### Responses
 The `pyonfleet` API wrapper returns the body of a [Response object](https://2.python-requests.org//en/master/api/#requests.Response).
@@ -72,16 +73,16 @@ The base URL for the Onfleet API is `https://onfleet.com/api/v2`, here are the s
 
 | `<endpoint>` | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
-| [Admins](http://docs.onfleet.com/docs/administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
-| [Containers](http://docs.onfleet.com/docs/containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
-| [Destinations](http://docs.onfleet.com/docs/destinations) | get(id) | create(body) | x | x |
-| [Hubs](http://docs.onfleet.com/docs/hubs) | get() | x | x | x |
-| [Organization](http://docs.onfleet.com/docs/organizations) | get(), get(id) | x | insertTask(id, body) | x |
-| [Recipients](http://docs.onfleet.com/docs/recipients)  | get(id), get(name), get(phone) | create(body) | update(id, body) | x |
-| [Tasks](http://docs.onfleet.com/docs/tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body) | update(id, body) | deleteOne(id) |
-| [Teams](http://docs.onfleet.com/docs/teams) | get(), get(id) | create(body) | update(id, body), insertTask(id, body) | deleteOne(id) |
-| [Webhooks](http://docs.onfleet.com/docs/webhooks) | get() | create(body) | x | deleteOne(id) |
-| [Workers](http://docs.onfleet.com/docs/workers) | get(), get(queryParams), get(id), getByLocation(queryParams), getSchedule(id) | create(body), setSchedule(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
+| [Admins](https://docs.onfleet.com/reference#administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
+| [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
+| [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body) | x | x |
+| [Hubs](https://docs.onfleet.com/reference#hubs) | get() | x | x | x |
+| [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
+| [Recipients](https://docs.onfleet.com/reference#recipients)  | get(id), get(name), get(phone) | create(body) | update(id, body) | x |
+| [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body) | update(id, body) | deleteOne(id) |
+| [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id) | create(body) | update(id, body), insertTask(id, body) | deleteOne(id) |
+| [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
+| [Workers](https://docs.onfleet.com/reference#workers) | get(), get(queryParams), get(id), getByLocation(queryParams), getSchedule(id) | create(body), setSchedule(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 
 #### GET Requests
 To get all the documents within an endpoint:
@@ -161,7 +162,8 @@ api.tasks.autoAssign(body="<auto_assign_object>")
 
 api.workers.setSchedule(id="<24_digit_id>", body="<schedule_object>")
 ```
-For more details, check our documentation on [clone](http://docs.onfleet.com/docs/tasks#clone-task), [forceComplete](http://docs.onfleet.com/docs/tasks#complete-task), [batchCreate](http://docs.onfleet.com/docs/tasks#create-tasks-in-batch), [autoAssign](http://docs.onfleet.com/docs/tasks#automatically-assign-get-of-tasks), and [setSchedule](http://docs.onfleet.com/docs/workers#set-workers-schedule).
+For more details, check our documentation on [clone](https://docs.onfleet.com/reference#clone-task), [forceComplete](https://docs.onfleet.com/reference#complete-task), [batchCreate](https://docs.onfleet.com/reference#create-tasks-in-batch), [autoAssign](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), and [setSchedule](https://docs.onfleet.com/reference#set-workers-schedule)
+
 
 #### PUT Requests
 To update a document within an endpoint:
@@ -179,7 +181,7 @@ api.workers.update(id="<24_digit_id>", body=updateBody)
 ```python
 api.workers.updateSchedule(id="<24_digit_id>", body=newSchedule)
 ```
-For more details, check our documentation on [updateSchedule](http://docs.onfleet.com/docs/workers#update-workers-schedule)
+For more details, check our documentation on [updateSchedule](https://docs.onfleet.com/reference#update-workers-schedule)
 
 ##### Examples of insertTask()
 ```python
