@@ -6,7 +6,6 @@ from requests.auth import HTTPBasicAuth
 from onfleet.endpoint import Endpoint
 from onfleet.error import ValidationError
 
-
 class Onfleet(object):
     with open(os.path.join(sys.prefix, "config/config.json")) as json_data_file:
         data = json.load(json_data_file)
@@ -29,3 +28,24 @@ class Onfleet(object):
         # Go through the config.json file to create endpoints
         for endpoint, http_methods in resources.items():
             setattr(self, endpoint, Endpoint(http_methods, session))
+
+def verify_webhook(header, body, secret):
+    """Verifies that the webhook originated from Onfleet.
+
+    Args: 
+        header: can be the full headers in dictionary-like format from the request, or the value of the X-Onfleet-Signature header
+        body: should be the full body of the POST request in raw bytes, *not* the parsed JSON object
+        secret: the value of the webhook secret from the Onfleet dashboard, in hexadecimal format
+    Returns:
+        True for verified, False for not verified"""
+
+    import hashlib, hmac, binascii
+    if isinstance(header, bytes):
+        check_against = header
+    elif isinstance(header, str):
+        check_against = header.encode('utf8')
+    elif hasattr(header, 'get') and callable(header.get) and header.get("X-Onfleet-Signature") is not None:
+        check_against = header.get("X-Onfleet-Signature")
+    else:
+        raise ValueError("header must be bytes, string, or mapping type")
+    return hmac.new(binascii.a2b_hex(secret), body, 'sha512').hexdigest() == check_against
