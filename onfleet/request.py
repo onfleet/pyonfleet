@@ -47,9 +47,9 @@ class Request:
             params=queryParams
         )
         if (response.ok):
-            rate_remaining = response.headers["X-RateLimit-Remaining"]
-            if (int(rate_remaining) < 5):
-                time.sleep(.250)
+            rate_remaining = int(response.headers["X-RateLimit-Remaining"])
+            if (rate_remaining < 5):
+                time.sleep(1 / rate_remaining)
             return response.status_code if (method == "DELETE" or "complete" in url) else response.json()
 
         error = json.loads(response.text)
