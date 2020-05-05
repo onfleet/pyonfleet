@@ -15,7 +15,7 @@ setuptools.setup(
     url="http://docs.onfleet.com",
     packages=setuptools.find_packages(),
     data_files=[
-        ("config", ["config/config.json"])
+        ("config", ["onfleet/config.json"])
     ],
     include_package_data=True,
     install_requires=[

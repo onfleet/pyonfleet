@@ -5,11 +5,10 @@ import os
 from requests.auth import HTTPBasicAuth
 from onfleet.endpoint import Endpoint
 from onfleet.error import ValidationError
-
+from importlib import resources
 
 class Onfleet(object):
-    with open(os.path.join(sys.prefix, "config/config.json")) as json_data_file:
-        data = json.load(json_data_file)
+    data = json.loads(resources.read_text('onfleet', 'config.json'))
     if (os.path.isfile(".auth.json")):
         with open(".auth.json") as json_secret_file:
             secret = json.load(json_secret_file)
