@@ -15,7 +15,7 @@ class Request:
         self.path = path
         self.http_method = http_method
 
-    def __call__(self, headers=None, queryParams=None, id=None, body=None, **data):
+    def __call__(self, headers=None, queryParams=None, id=None, filter=None, body=None, **data):
         method = self.http_method
         path_selected = self.url_selector(self.path, id, data)
         url = self.url_joiner(self.default_url, path_selected)
@@ -31,6 +31,9 @@ class Request:
 
         # Headers can be override
         headers = headers or self.default_headers
+
+        if filter:
+            url += "?filter=" + filter
 
         # Setting up the HTTP request
         response = self.session.request(
