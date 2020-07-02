@@ -5,10 +5,13 @@ import os
 from requests.auth import HTTPBasicAuth
 from onfleet.endpoint import Endpoint
 from onfleet.error import ValidationError
+from pathlib import Path
 
 
 class Onfleet(object):
-    with open(os.path.join(sys.prefix, "config/config.json")) as json_data_file:
+    config_data_folder = Path("config/")
+    config_file = config_data_folder / "config.json"
+    with open(config_file) as json_data_file:
         data = json.load(json_data_file)
     if (os.path.isfile(".auth.json")):
         with open(".auth.json") as json_secret_file:
