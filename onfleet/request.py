@@ -1,9 +1,13 @@
-import re
 import json
-import urllib.parse
 import pkg_resources
+import re
+import time
+import urllib.parse
 from onfleet.error import PermissionError, HttpError, RateLimitError, ServiceError
+from ratelimit import limits
+from backoff import on_exception, expo
 
+RATE_LIMIT = 20
 class Request:
     def __init__(self, http_method, path, session):
         self.default_url = "https://onfleet.com/api/v2"
@@ -15,6 +19,8 @@ class Request:
         self.path = path
         self.http_method = http_method
 
+    @on_exception(expo, RateLimitError, max_tries=8)
+    @limits(calls=RATE_LIMIT, period=1)
     def __call__(self, headers=None, queryParams=None, id=None, body=None, **data):
         method = self.http_method
         path_selected = self.url_selector(self.path, id, data)
@@ -41,6 +47,9 @@ class Request:
             params=queryParams
         )
         if (response.ok):
+            rate_remaining = int(response.headers["X-RateLimit-Remaining"])
+            if (rate_remaining < 5):
+                time.sleep(1 / rate_remaining)
             return response.status_code if (method == "DELETE" or "complete" in url) else response.json()
 
         error = json.loads(response.text)
@@ -98,4 +107,3 @@ class Request:
                 value = str(obj[key]).lower()
                 obj.update({ key: value })
         return obj
-            
