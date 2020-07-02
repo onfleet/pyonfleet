@@ -21,7 +21,6 @@ class Onfleet(object):
         self._session = requests.Session()
         self._session.auth = (api_key if api_key else self.secret["API_KEY"], "") # auth takes api_key and api_secret
         self._initialize_resources(self._session)
-        print("test")
 
     def auth_test(self):
         path = self.data["URL"]["base_url"] + self.data["URL"]["version"] + self.data["URL"]["auth_test"]
