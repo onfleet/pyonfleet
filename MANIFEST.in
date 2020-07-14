@@ -1,3 +1,3 @@
 include README*
 include *.txt
-include config.json
+include config/config.json
