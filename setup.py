@@ -6,7 +6,7 @@ README = (HERE / "README.md").read_text()
 
 setuptools.setup(
     name="pyonfleet",  
-    version= "1.0.2",
+    version= "1.0.3.1",
     author="James Li",
     author_email="support@onfleet.com",
     description="Onfleet's Python API Wrapper Package",
@@ -19,7 +19,7 @@ setuptools.setup(
     ],
     include_package_data=True,
     install_requires=[
-        "requests", "configparser", "ratelimit", "backoff"
+        "requests", "configparser", "ratelimit", "backoff", "pathlib"
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",
