@@ -10,6 +10,8 @@
 
 Visit our [blog post on the API wrapper project](https://onfleet.com/blog/api-wrappers-explained/) to learn more about our initiatives. If you have any questions, please reach out to Onfleet by submitting an issue [here](https://github.com/onfleet/pyonfleet/issues) or contact support@onfleet.com
 
+STABLE VERSION: 1.0.1
+
 ## Table of Contents
 - [Onfleet Python Wrapper](#onfleet-python-wrapper)
   * [Table of Contents](#table-of-contents)
