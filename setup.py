@@ -19,7 +19,7 @@ setuptools.setup(
         "": ["*.json"]
     },
     install_requires=[
-        "requests", "configparser", "ratelimit", "backoff", "pathlib"
+        "requests", "ratelimit", "backoff"
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",
