@@ -53,9 +53,12 @@ class Request:
             return response.status_code if (method == "DELETE" or "complete" in url) else response.json()
 
         error = json.loads(response.text)
-        error_code = error["message"]["error"]
-        error_message = error["message"]["message"]
-        error_request = error["message"]["request"]
+        try:
+            error_code = error["message"]["error"]
+            error_message = error["message"]["message"]
+            error_request = error["message"]["request"] 
+        except TypeError:
+            raise HttpError(error.get("message"), response.status_code, None)
         if (error_code <= 1108 and error_code >= 1100):
             raise PermissionError(error_message, error_code, error_request)
         elif (error_code == 2300):
