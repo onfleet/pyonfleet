@@ -80,7 +80,7 @@ The base URL for the Onfleet API is `https://onfleet.com/api/v2`, here are the s
 | [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
 | [Recipients](https://docs.onfleet.com/reference#recipients)  | get(id), get(name), get(phone) | create(body) | update(id, body) | x |
 | [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body) | update(id, body) | deleteOne(id) |
-| [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id) | create(body) | update(id, body), insertTask(id, body) | deleteOne(id) |
+| [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id) | create(body), autoDispatch(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 | [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
 | [Workers](https://docs.onfleet.com/reference#workers) | get(), get(queryParams), get(id), getByLocation(queryParams), getSchedule(id) | create(body), setSchedule(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 
@@ -152,7 +152,7 @@ driver = {
 
 api.workers.create(body=driver)
 ```
-Extended POST requests include `clone`, `forceComplete`, `batchCreate`, `autoAssign` on the tasks endpoint, and `setSchedule` on the workers endpoint:
+Extended POST requests include `clone`, `forceComplete`, `batchCreate`, `autoAssign` on the tasks endpoint, `setSchedule` on the workers endpoint, and `autoDispatch` on the teams endpoint:
 
 ```python
 api.tasks.clone(id="<24_digit_id>")
@@ -161,6 +161,8 @@ api.tasks.batchCreate(body="<task_object_get>")
 api.tasks.autoAssign(body="<auto_assign_object>")
 
 api.workers.setSchedule(id="<24_digit_id>", body="<schedule_object>")
+
+api.teams.autoDispatch(id="<24_digit_id>", body="<auto_dispatch_object>")
 ```
 For more details, check our documentation on [clone](https://docs.onfleet.com/reference#clone-task), [forceComplete](https://docs.onfleet.com/reference#complete-task), [batchCreate](https://docs.onfleet.com/reference#create-tasks-in-batch), [autoAssign](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), and [setSchedule](https://docs.onfleet.com/reference#set-workers-schedule)
 

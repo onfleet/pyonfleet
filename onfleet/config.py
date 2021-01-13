@@ -83,7 +83,8 @@ class Config(object):
           get = ["/teams", "/teams/:teamId"]
         ),
         POST = dict(
-          create = "/teams"
+          create = "/teams",
+          autoDispatch = "/teams/:teamId/dispatch"
         ),
         PUT = dict(
           update = "/teams/:teamId",
