@@ -151,7 +151,7 @@ api.workers.setSchedule(id="<24_digit_id>", body="<schedule_object>")
 
 api.teams.autoDispatch(id="<24_digit_id>", body="<auto_dispatch_object>")
 ```
-參考資料：[clone](https://docs.onfleet.com/reference#clone-task), [forceComplete](https://docs.onfleet.com/reference#complete-task), [batchCreate](https://docs.onfleet.com/reference#create-tasks-in-batch), [autoAssign](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), 以及[setSchedule](https://docs.onfleet.com/reference#set-workers-schedule)
+參考資料：[clone](https://docs.onfleet.com/reference#clone-task), [forceComplete](https://docs.onfleet.com/reference#complete-task), [batchCreate](https://docs.onfleet.com/reference#create-tasks-in-batch), [autoAssign](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [setSchedule](https://docs.onfleet.com/reference#set-workers-schedule), 以及[autoDispatch](https://docs.onfleet.com/reference#team-auto-dispatch)。
 
 #### PUT 請求
 取代（更新）某單一指定資源的指令如下:
