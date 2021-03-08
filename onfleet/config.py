@@ -6,6 +6,20 @@ class Config(object):
       auth_test = "auth/test/"
     ),
     RESOURCES = dict(
+      admins = dict(
+        GET = dict(
+          get = "/admins"
+        ),
+        POST = dict(
+          create = "/admins"
+        ),
+        PUT = dict(
+          update = "/admins/:adminId"
+        ),
+        DELETE = dict(
+          deleteOne = "/admins/:adminId"
+        )
+      ),
       administrators = dict(
         GET = dict(
           get = "/admins"

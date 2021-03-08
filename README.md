@@ -73,7 +73,7 @@ The base URL for the Onfleet API is `https://onfleet.com/api/v2`, here are the s
 
 | `<endpoint>` | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
-| [Admins](https://docs.onfleet.com/reference#administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
+| [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body) | update(id, body) | deleteOne(id) |
 | [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
 | [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body) | x | x |
 | [Hubs](https://docs.onfleet.com/reference#hubs) | get() | x | x | x |
