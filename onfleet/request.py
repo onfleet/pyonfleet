@@ -56,7 +56,8 @@ class Request:
         try:
             error_code = error["message"]["error"]
             error_message = error["message"]["message"]
-            error_request = error["message"]["request"] 
+            error_request = error["message"]["request"]
+            error_cause = error["message"]["cause"]
         except TypeError:
             raise HttpError(error.get("message"), response.status_code, None)
         if (error_code <= 1108 and error_code >= 1100):
@@ -66,7 +67,7 @@ class Request:
         elif (error_code >= 2500):
             raise ServiceError(error_message, error_code, error_request)
         else:
-            raise HttpError(error_message, error_code, error_request)
+            raise HttpError(error_message, error_code, error_request, error_cause)
 
     @staticmethod
     def url_joiner(url, path):
