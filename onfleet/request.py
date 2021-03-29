@@ -57,7 +57,7 @@ class Request:
             error_code = error["message"]["error"]
             error_message = error["message"]["message"]
             error_request = error["message"]["request"]
-            error_cause = error["message"]["cause"]
+            error_cause = error["message"].get("cause")
         except TypeError:
             raise HttpError(error.get("message"), response.status_code, None)
         if (error_code <= 1108 and error_code >= 1100):
