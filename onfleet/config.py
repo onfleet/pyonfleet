@@ -25,7 +25,8 @@ class Config(object):
           get = "/admins"
         ),
         POST = dict(
-          create = "/admins"
+          create = "/admins",
+          matchMetadata = "/admins/metadata"
         ),
         PUT = dict(
           update = "/admins/:adminId"
@@ -47,12 +48,19 @@ class Config(object):
           get = "/destinations/:destinationId"
         ),     
         POST = dict(
-          create = "/destinations"
+          create = "/destinations",
+          matchMetadata = "/destinations/metadata"
         )
       ),
       hubs = dict(
         GET = dict(
           get = "/hubs"
+        ),
+        POST = dict(
+          create = "/hubs"
+        ),
+        PUT = dict(
+          update = "/hubs/:hubId"
         ) 
       ),
       organization = dict(
@@ -68,7 +76,8 @@ class Config(object):
           get = "/recipients/:recipientId"
         ),
         POST = dict(
-          create = "/recipients"
+          create = "/recipients",
+          matchMetadata = "/recipients/metadata"
         ),
         PUT = dict(
           update = "/recipients/:recipientId"
@@ -83,7 +92,8 @@ class Config(object):
           clone = "/tasks/:taskId/clone",
           forceComplete = "/tasks/:taskId/complete",
           batchCreate = "/tasks/batch",
-          autoAssign = "/tasks/autoAssign"
+          autoAssign = "/tasks/autoAssign",
+          matchMetadata = "/tasks/metadata"
         ),
         PUT = dict(
           update = "/tasks/:taskId"
@@ -94,10 +104,12 @@ class Config(object):
       ),
       teams = dict(
         GET = dict(
-          get = ["/teams", "/teams/:teamId"]
+          get = ["/teams", "/teams/:teamId"],
+          getWorkerEta = "/teams/:teamId/estimate"
         ),
         POST = dict(
-          create = "/teams"
+          create = "/teams",
+          autoDispatch = "/teams/:teamId/dispatch"
         ),
         PUT = dict(
           update = "/teams/:teamId",
@@ -115,7 +127,8 @@ class Config(object):
         ),
         POST = dict(
           create = "/workers",
-          setSchedule = "/workers/:workerId/schedule"
+          setSchedule = "/workers/:workerId/schedule",
+          matchMetadata = "/workers/metadata"
         ),
         PUT = dict(
           update = "/workers/:workerId",
