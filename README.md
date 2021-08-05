@@ -56,7 +56,7 @@ The format of `.auth.json` is shown below:
 }
 ```
 
-You can also opt in to not store your API key here and use it on the fly instead.
+You can also opt in to not store your API key here and use it on the fly instead:
 ```python
 from onfleet import Onfleet
 
