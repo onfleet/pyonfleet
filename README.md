@@ -1,77 +1,84 @@
 # Onfleet Python Wrapper
 
-![Travis (.org)](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
-[![GitHub](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
-![GitHub top language](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
+![Build](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
+[![License](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
+[![PyPI - Version](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
+![GitHub - Top language](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
-*Read this document in another language: [English](https://github.com/onfleet/pyonfleet/blob/master/README.md), [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)*
+> *Read this document in another language*:  
+> [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)  
+> [Español](https://github.com/onfleet/pyonfleet/blob/master/README.es.md)  
 
-Visit our [blog post on the API wrapper project](https://onfleet.com/blog/api-wrappers-explained/) to learn more about our initiatives. If you have any questions, please reach out to Onfleet by submitting an issue [here](https://github.com/onfleet/pyonfleet/issues) or contact support@onfleet.com
+Visit our blog post on the [API wrapper project](https://onfleet.com/blog/api-wrappers-explained/) to learn more about our initiatives.  
+If you have any questions, please reach us by submitting an issue [here](https://github.com/onfleet/pyonfleet/issues) or contact support@onfleet.com.
 
-## Table of Contents
-- [Onfleet Python Wrapper](#onfleet-python-wrapper)
-  * [Table of Contents](#table-of-contents)
-  * [Synopsis](#synopsis)
-  * [Installation](#installation)
-  * [Usage](#usage)
-    + [Throttling](#throttling)
-    + [Responses](#responses)
-    + [Supported CRUD Operations](#supported-crud-operations)
-      - [GET Requests](#get-requests)
-        * [Examples of get()](#examples-of-get)
-        * [Examples of get(param)](#examples-of-get-param)
-        * [Examples of getByLocation:](#examples-of-getbylocation)
-      - [POST Requests](#post-requests)
-        * [Examples of create()](#examples-of-create)
-      - [PUT Requests](#put-requests)
-        * [Examples of update()](#examples-of-update)
-        * [Examples of updateSchedule()](#examples-of-updateschedule)
-        * [Examples of insertTask()](#examples-of-inserttask)
-      - [DELETE Requests](#delete-requests)
-        * [Examples of deleteOne()](#examples-of-deleteone)
+## Table of contents
+* [Table of contents](#table-of-contents)
+* [Synopsis](#synopsis)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Throttling](#throttling)
+* [Responses](#responses)
+* [Supported CRUD operations](#supported-crud-operations)
+    - [GET Requests](#get-requests)
+        * [Examples of `get()`](#examples-of-get)
+        * [Examples of `get(param)`](#examples-of-getparam)
+        * [Examples of `getByLocation`](#examples-of-getbylocation)
+    - [POST Requests](#post-requests)
+        * [Examples of `create()`](#examples-of-create)
+    - [PUT Requests](#put-requests)
+        * [Examples of `update()`](#examples-of-update)
+        * [Examples of `updateSchedule()`](#examples-of-updateschedule)
+        * [Examples of `insertTask()`](#examples-of-inserttask)
+    - [DELETE Requests](#delete-requests)
+        * [Examples of `deleteOne()`](#examples-of-deleteone)
 
 ## Synopsis
-
 The Onfleet Python library provides convenient access to the Onfleet API. 
 
 ## Installation
-
 ```
 pip install pyonfleet
 ```
-## Usage
-Before using the API wrapper, you will need to obtain an API key from your organization admin. Creation and integration of API keys are performed through the [Onfleet dashboard](https://onfleet.com/dashboard#/manage).
 
-To authenticate, you will also need to create a file named `.auth.json` under your working directory, this is where you will store your API credentials.
+## Usage
+Before using the API wrapper, you will need to obtain an API key from one of your organization's admins.
+
+Creation and integration of API keys are performed through the [Onfleet dashboard](https://onfleet.com/dashboard#/manage).
+
+To authenticate, you will also need to create a file named `.auth.json` under your working directory –this is where you will store your API credentials.
 
 The format of `.auth.json` is shown below:
 ```json
 {
-    "API_KEY": "<your_api_key>", 
+    "API_KEY": "<your_api_key>"
 }
 ```
-You can also opt in to not store your API key here and use it on the fly instead.
 
-Once the Onfleet object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/). Here are some usage case:
+You can also opt in to not store your API key here and use it on the fly instead.
 ```python
 from onfleet import Onfleet
 
-api = Onfleet() # if .auth.json was provided
-api = Onfleet(api_key="<your_api_key>") # if no .auth.json was provided
+# Option 1 - Recommended
+api = Onfleet()  # Using the .auth.json file
+
+# Option 2
+api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
+Once the Onfleet object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/).
+
 ### Throttling
-Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys, learn more about it [here](https://docs.onfleet.com/reference#throttling). 
+Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys. Learn more about it [here](https://docs.onfleet.com/reference#throttling).
 
 ### Responses
-The `pyonfleet` API wrapper returns the body of a [Response object](https://2.python-requests.org//en/master/api/#requests.Response).
+Responses of this library are instances of [Response](https://2.python-requests.org//en/master/api/#requests.Response) from the `requests` library.
 
-### Supported CRUD Operations 
-The base URL for the Onfleet API is `https://onfleet.com/api/v2`, here are the supported CRUD operations for each endpoint:
+### Supported CRUD operations 
+Here are the operations available for each entity:
 
-| `<endpoint>` | GET | POST | PUT | DELETE |
+| Entity | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
 | [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
@@ -89,114 +96,135 @@ To get all the documents within an endpoint:
 ```python
 get()
 ```
-##### Examples of get()
+
+##### Examples of `get()`
 ```python
 api.workers.get()
 api.workers.get(queryParams="")
 ```
-Option to use query parameters for some certain endpoints, refer back to API documents for endpoints that support query parameters:
+
+Optionally you can use `queryParams` for some certain endpoints.  
+Refer back to [API documentation](https://docs.onfleet.com/) for endpoints that support query parameters.
 ```python
+# Option 1
 api.workers.get(queryParams="phones=<phone_number>")
 
-or
-
-api.workers.get(queryParams={"phones":"<phone_number>"})
+# Option 2
+api.workers.get(queryParams={"phones": "<phone_number>"})
 ```
 
 To get one of the document within an endpoint, specify the param that you wish to search by:
 ```python
-get(param=<some_param>)
+get(param="<data>")
 ```
 
-##### Examples of get(param) 
+##### Examples of `get(param)`
 ```python
-api.workers.get(id="<24_digit_id>")
-api.workers.get(id="<24_digit_id>", queryParams={"analytics": "true"})
-api.tasks.get(shortId="<shortId>")
-api.recipients.get(phone="<phone_number>")
-api.recipients.get(name="<recipient_name>")
+api.workers.get(id="<24_digit_ID>")
+api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
 
-api.containers.get(workers="<worker_id>")
-api.containers.get(teams="<team_id>")
-api.containers.get(organizations="<org_id>")
+api.tasks.get(shortId="<shortId>")
+
+api.recipients.get(phone="<phone_number>")
+api.recipients.get(name="<name>")
+
+api.containers.get(workers="<worker_ID>")
+api.containers.get(teams="<team_ID>")
+api.containers.get(organizations="<organization_ID>")
 ```
+
 To get a driver by location, use the `getByLocation` function:
 ```python
-getByLocation(queryParams=<some_param>)
+getByLocation(queryParams="<location_data>")
 ```
 
-##### Examples of getByLocation:
+##### Examples of `getByLocation`:
 ```python
-params = {"longitude":"-122.4","latitude":"37.7601983","radius":"6000"}
-api.workers.getByLocation(queryParams=params)
+location_data = {
+    "longitude": "-122.4",
+    "latitude": "37.7601983",
+    "radius": "6000",
+}
+
+api.workers.getByLocation(queryParams=location_data)
 ```
 
 #### POST Requests
 To create a document within an endpoint:
 ```python
-create(body="<body_object>")
+create(body="<data>")
 ```
-##### Examples of create()
+
+##### Examples of `create()`
 ```python
-driver = {
-  "name": "A Swartz Test",
-  "phone": "+16173428853",
-  "teams": ["<a_team_id>", "<a_team_id> (optional)..."],
-  "vehicle": {
-    "type": "CAR",
-    "description": "Tesla Model S",
-    "licensePlate": "FKNS9A",
-    "color": "purple",
-  }
+data = {
+    "name": "A Swartz Test",
+    "phone": "+16173428853",
+    "teams": ["<a_team_ID>", "<another_team_ID> (optional)", ...],
+    "vehicle": {
+        "type": "CAR",
+        "description": "Tesla Model S",
+        "licensePlate": "FKNS9A",
+        "color": "purple",
+    },
 }
 
-api.workers.create(body=driver)
+api.workers.create(body=data)
 ```
-Extended POST requests include `clone`, `forceComplete`, `batchCreate`, `autoAssign` on the tasks endpoint, `setSchedule` on the workers endpoint, `autoDispatch` on the teams endpoint, and `matchMetadata` on all supported entities:
+
+Extended POST requests include `clone`, `forceComplete`, `batchCreate`, `autoAssign` on the *Tasks* endpoint; `setSchedule` on the *Workers* endpoint; `autoDispatch` on the *Teams* endpoint; and `matchMetadata` on all supported entities. For instance:
 
 ```python
-api.tasks.clone(id="<24_digit_id>")
-api.tasks.forceComplete(id="<24_digit_id>", body="<completion_details>")
-api.tasks.batchCreate(body="<task_object_get>")
-api.tasks.autoAssign(body="<auto_assign_object>")
+api.tasks.clone(id="<24_digit_ID>")
+api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
+api.tasks.batchCreate(body="<data>")
+api.tasks.autoAssign(body="<data>")
 
-api.workers.setSchedule(id="<24_digit_id>", body="<schedule_object>")
-api.teams.autoDispatch(id="<24_digit_id>", body="<dispatch_config>")
-api.<entity>.matchMetadata(body="<array_of_metadata_object>")
+api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
+api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
+
+api.<entity>.matchMetadata(body="<data>")
 ```
-For more details, check our documentation on [clone](https://docs.onfleet.com/reference#clone-task), [forceComplete](https://docs.onfleet.com/reference#complete-task), [batchCreate](https://docs.onfleet.com/reference#create-tasks-in-batch), [autoAssign](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [setSchedule](https://docs.onfleet.com/reference#set-workers-schedule), and [matchMetadata](https://docs.onfleet.com/reference#querying-by-metadata).
+
+For more details, check our documentation on [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), and [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata).
 
 
 #### PUT Requests
 To update a document within an endpoint:
 ```python
-update(id="<24_digit_id>", body="<body_object>")
+update(id="<24_digit_ID>", body="<data>")
 ```
-##### Examples of update()
+
+##### Examples of `update()`
 ```python
-updateBody = {
+new_data = {
     "name": "New Driver Name",
 }
-api.workers.update(id="<24_digit_id>", body=updateBody)
-```
-##### Examples of updateSchedule()
-```python
-api.workers.updateSchedule(id="<24_digit_id>", body=newSchedule)
-```
-For more details, check our documentation on [updateSchedule](https://docs.onfleet.com/reference#update-workers-schedule)
 
-##### Examples of insertTask()
+api.workers.update(id="<24_digit_ID>", body=new_data)
+```
+
+##### Examples of `updateSchedule()`
 ```python
-api.workers.insertTask(id="kAQ*G5hnqlOq4jVvwtGNuacl", body="<body_object>")
+api.workers.updateSchedule(id="<24_digit_ID>", body="<data>")
+```
+For more details, check our documentation on [`updateSchedule`](https://docs.onfleet.com/reference#update-workers-schedule)
+
+##### Examples of `insertTask()`
+```python
+api.workers.insertTask(id="<24_digit_ID>", body="<data>")
 ```
 
 #### DELETE Requests
 To delete a document within an endpoint:
 ```python
-deleteOne(id="<24_digit_id>")
+deleteOne(id="<24_digit_ID>")
 ```
-##### Examples of deleteOne()
+
+##### Examples of `deleteOne()`
 ```python
-api.workers.deleteOne(id="<24_digit_id>")
+api.workers.deleteOne(id="<24_digit_ID>")
 ```
+
+*Go to [top](#onfleet-python-wrapper)*.

@@ -10,7 +10,7 @@
 > [English](https://github.com/onfleet/pyonfleet/blob/master/README.md)  
 > [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)  
 
-Los invitamos a visitar nuestra publicación sobre el [proyecto de librerías para la API](https://onfleet.com/blog/api-wrappers-explained/) para conocer más sobre estas iniciativas.  
+Los invitamos a visitar nuestra publicación sobre el [proyecto de librerías para la API](https://onfleet.com/blog/api-wrappers-explained/) para conocer más sobre nuestras iniciativas.  
 Si tienen preguntas, nos pueden contactar creando un issue [aquí](https://github.com/onfleet/pyonfleet/issues) o escribiendo a support@onfleet.com.
 
 ## Tabla de contenidos
@@ -43,7 +43,7 @@ pip install pyonfleet
 ```
 
 ## Uso
-Antes de usar la librería, es indispensable obtener una clave para la API a través de alguno de los administradores de la organización a la que pertenecemos.  
+Antes de usar la librería, es indispensable obtener una clave para la API a través de alguno de los administradores de la organización a la que pertenecemos.
 
 La creación e integración de las claves para la API se realiza a través del [panel principal de Onfleet](https://onfleet.com/dashboard#/manage).
 
@@ -74,10 +74,10 @@ Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los
 La API impone un límite de 20 peticiones por segundo, sumando las peticiones de todas las claves para la API disponibles en nuestra organización. [Aquí](https://docs.onfleet.com/reference#throttling) se pueden encontrar más detalles al respecto.
 
 ### Respuestas
-Las respuestas de la librería corresponden a instancias de [Response](https://2.python-requests.org//en/master/api/#requests.Response) de la librería `requests`.
+Las respuestas de esta librería corresponden a instancias de [Response](https://2.python-requests.org//en/master/api/#requests.Response) de la librería `requests`.
 
 ### Operaciones CRUD soportadas
-Estos son las operaciones CRUD soportadas para cada endpoint:
+Estos son las ooperaciones disponibles para cada endpoint:
 
 | Recurso | GET | POST | PUT | DELETE |
 |:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
@@ -105,7 +105,7 @@ api.workers.get(queryParams="")
 ```
 
 Opcionalmente, podemos utilizar `queryParams` en los recursos que lo soportan.  
-En la documentación de la API están descritos qué recursos lo permiten.
+En la [documentación de la API](https://docs.onfleet.com/) están descritos qué recursos lo permiten.
 ```python
 # Opción 1
 api.workers.get(queryParams="phones=<phone_number>")
@@ -126,7 +126,7 @@ api.workers.get(id="<ID_de_24_digitos>", queryParams={"analytics": "true"})
 
 api.tasks.get(shortId="<shortID>")
 
-api.recipients.get(phone="<phone>")
+api.recipients.get(phone="<phone_number>")
 api.recipients.get(name="<name>")
 
 api.containers.get(workers="<ID_de_un_worker>")
@@ -136,7 +136,7 @@ api.containers.get(organizations="<ID_de_un_organization>")
 
 Para obtener un conductor según su ubicación, podemos utilizar la funcion `getByLocation`:
 ```python
-getByLocation(queryParams=<datos_de_ubicacion>)
+getByLocation(queryParams="<datos_de_ubicacion>")
 ```
 
 ##### Ejemplos de `getByLocation`:
@@ -153,7 +153,7 @@ api.workers.getByLocation(queryParams=datos_de_ubicacion)
 #### Peticiones POST
 Para crear un elemento de un recurso:
 ```python
-create(body=<datos>)
+create(body="<datos>")
 ```
 
 ##### Ejemplos de `create()`
@@ -186,7 +186,6 @@ api.workers.setSchedule(id="<ID_de_24_digitos>", body="<datos>")
 api.teams.autoDispatch(id="<ID_de_24_digitos>", body="<datos>")
 
 api.<recurso>.matchMetadata(body="<datos>")
-
 ```
 
 Para más información, podemos consultar la documentación sobre [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule) y [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata).
