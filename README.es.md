@@ -53,7 +53,7 @@ En este archivo es donde se almacenarán las credenciales de la API.
 El formato del archivo `.auth.json` es el siguiente:
 ```json
 {
-    "API_KEY": "<llave_para_la_api>"
+    "API_KEY": "<your_api_key>"
 }
 ```
 
@@ -65,7 +65,7 @@ from onfleet import Onfleet
 api = Onfleet()  # Utilizando el archivo .auth.json
 
 # Opción 2
-api = Onfleet(api_key="<llave_para_la_api>")  # Sin el archivo .auth.json
+api = Onfleet(api_key="<your_api_key>")  # Sin el archivo .auth.json
 ```
 
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
@@ -116,7 +116,7 @@ api.workers.get(queryParams={"phones": "<phone_number>"})
 
 Para obtener un elemento dentro de un recurso, éste se puede localizar mediante un parámetro específico:
 ```python
-get(parametro="<valor>")
+get(param="<value>")
 ```
 
 ##### Ejemplos de `get(parametro)`
@@ -136,18 +136,18 @@ api.containers.get(organizations="<organization_ID>")
 
 Para obtener un conductor según su ubicación, podemos utilizar la función `getByLocation`:
 ```python
-getByLocation(queryParams="<datos_de_ubicacion>")
+getByLocation(queryParams="<location_params>")
 ```
 
 ##### Ejemplos de `getByLocation`:
 ```python
-datos_de_ubicacion = {
+location_params = {
     "longitude": "-122.4",
     "latitude": "37.7601983",
     "radius": "6000",
 }
 
-api.workers.getByLocation(queryParams=datos_de_ubicacion)
+api.workers.getByLocation(queryParams=location_params)
 ```
 
 #### Peticiones POST
@@ -158,8 +158,8 @@ create(body="<data>")
 
 ##### Ejemplos de `create()`
 ```python
-datos = {
-    "name": "Juan Conductor",
+data = {
+    "name": "John Driver",
     "phone": "+16173428853",
     "teams": ["<team_ID>", "<team_ID> (opcional)", ...],
     "vehicle": {
@@ -170,7 +170,7 @@ datos = {
     },
 }
 
-api.workers.create(body=datos)
+api.workers.create(body=data)
 ```
 
 Otras peticiones POST incluyen `clone`, `forceComplete`, `batchCreate`, `autoAssign` en el recurso *Tasks*; `setSchedule` en el recurso *Workers*; `autoDispatch` en el recurso *Teams*; y `matchMetadata` en todos los recursos que lo soportan. Por ejemplo:
@@ -199,11 +199,11 @@ update(id="<24_digit_ID>", body="<data>")
 
 ##### Ejemplos de `update()`
 ```python
-datos_nuevos = {
-    "name": "Felipe Conductor",
+new_data = {
+    "name": "Jack Driver",
 }
 
-api.workers.update(id="<24_digit_ID>", body=datos_nuevos)
+api.workers.update(id="<24_digit_ID>", body=new_data)
 ```
 
 ##### Ejemplos de `updateSchedule()`

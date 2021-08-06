@@ -49,7 +49,7 @@ pip install pyonfleet
 `.auth.json`的格式如下:
 ```json
 {
-    "API_KEY": "<你的API金鑰>"
+    "API_KEY": "<your_API_key>"
 }
 ```
 
@@ -136,9 +136,9 @@ create(body="<data>")
 ##### 使用`create`提交指定資源的範例
 ```python
 data = {
-    "name": "A Swartz Test",
+    "name": "John Driver",
     "phone": "+16173428853",
-    "teams": ["<a_team_ID>", "<another_team_ID> (optional)", ...],
+    "teams": ["<team_ID>", "<team_ID> (optional)", ...],
     "vehicle": {
         "type": "CAR",
         "description": "Tesla Model S",
@@ -169,13 +169,13 @@ api.<entity>.matchMetadata(body="<data>")
 #### PUT 請求
 取代（更新）某單一指定資源的指令如下:
 ```python
-update(id="<24_digit_ID>", body="<body_object>")
+update(id="<24_digit_ID>", body="<data>")
 ```
 
 ##### 使用`update`取代指定資源的範例
 ```python
 new_data = {
-    "name": "New Driver Name",
+    "name": "Jack Driver",
 }
 
 api.workers.update(id="<24_digit_ID>", body=new_data)
@@ -189,7 +189,7 @@ api.workers.updateSchedule(id="<24_digit_ID>", body="<data>")
 
 ##### 使用`insertTask`取代指定資源的範例
 ```python
-api.workers.insertTask(id="kAQ*G5hnqlOq4jVvwtGNuacl", body="<body_object>")
+api.workers.insertTask(id="24_digit_ID", body="<data>")
 ```
 
 #### DELETE 請求
@@ -203,4 +203,4 @@ deleteOne(id="<24_digit_ID>")
 api.workers.deleteOne(id="<24_digit_ID>")
 ```
 
-*Go to [top](#onfleet-python-wrapper)*。
+*返回[頂端](#onfleet-python-wrapper)*。

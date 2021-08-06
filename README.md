@@ -115,7 +115,7 @@ api.workers.get(queryParams={"phones": "<phone_number>"})
 
 To get one of the document within an endpoint, specify the param that you wish to search by:
 ```python
-get(param="<data>")
+get(param="<value>")
 ```
 
 ##### Examples of `get(param)`
@@ -135,7 +135,7 @@ api.containers.get(organizations="<organization_ID>")
 
 To get a driver by location, use the `getByLocation` function:
 ```python
-getByLocation(queryParams="<location_data>")
+getByLocation(queryParams="<location_params>")
 ```
 
 ##### Examples of `getByLocation`:
@@ -199,7 +199,7 @@ update(id="<24_digit_ID>", body="<data>")
 ##### Examples of `update()`
 ```python
 new_data = {
-    "name": "New Driver Name",
+    "name": "Jack Driver",
 }
 
 api.workers.update(id="<24_digit_ID>", body=new_data)
