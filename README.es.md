@@ -11,7 +11,7 @@
 > [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)  
 
 Los invitamos a visitar nuestra publicación sobre el [proyecto de librerías para la API](https://onfleet.com/blog/api-wrappers-explained/) para conocer más sobre nuestras iniciativas.  
-Si tienen preguntas, nos pueden contactar creando un issue [aquí](https://github.com/onfleet/pyonfleet/issues) o escribiendo a support@onfleet.com.
+En caso de preguntas, pueden contactarnos a través de un issue [aquí](https://github.com/onfleet/pyonfleet/issues) o escribirnos a support@onfleet.com.
 
 ## Tabla de contenidos
 * [Tabla de contenidos](#tabla-de-contenidos)
@@ -43,9 +43,9 @@ pip install pyonfleet
 ```
 
 ## Uso
-Antes de usar la librería, es indispensable obtener una clave para la API a través de alguno de los administradores de la organización a la que pertenecemos.
+Antes de usar la librería, es indispensable obtener una llave para la API a través de alguno de los administradores de la organización a la que pertenecemos.
 
-La creación e integración de las claves para la API se realiza a través del [panel principal de Onfleet](https://onfleet.com/dashboard#/manage).
+La creación e integración de llaves se realiza a través del [panel principal de Onfleet](https://onfleet.com/dashboard#/manage).
 
 Para autenticarse en la API es necesario también crear un archivo `.auth.json` dentro del directorio de trabajo.  
 En este archivo es donde se almacenarán las credenciales de la API.
@@ -53,11 +53,11 @@ En este archivo es donde se almacenarán las credenciales de la API.
 El formato del archivo `.auth.json` es el siguiente:
 ```json
 {
-    "API_KEY": "<clave_para_la_api>"
+    "API_KEY": "<llave_para_la_api>"
 }
 ```
 
-También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar la clave para la API directamente en cada petición:
+También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar la llave para la API directamente en cada petición:
 ```python
 from onfleet import Onfleet
 
@@ -65,16 +65,16 @@ from onfleet import Onfleet
 api = Onfleet()  # Utilizando el archivo .auth.json
 
 # Opción 2
-api = Onfleet(api_key="<clave_para_la_api>")  # Sin el archivo .auth.json
+api = Onfleet(api_key="<llave_para_la_api>")  # Sin el archivo .auth.json
 ```
 
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
 
 ### Límites
-La API impone un límite de 20 peticiones por segundo, sumando las peticiones de todas las claves para la API disponibles en nuestra organización. [Aquí](https://docs.onfleet.com/reference#throttling) se pueden encontrar más detalles al respecto.
+La API impone un límite de 20 peticiones por segundo sumando las peticiones de todas las llaves de la organización. [Aquí](https://docs.onfleet.com/reference#throttling) se pueden encontrar más detalles al respecto.
 
 ### Respuestas
-Las respuestas de esta librería corresponden a instancias de [Response](https://2.python-requests.org//en/master/api/#requests.Response) de la librería `requests`.
+Las respuestas de esta librería son instancias de [Response](https://2.python-requests.org//en/master/api/#requests.Response) de la librería `requests`.
 
 ### Operaciones CRUD soportadas
 Estos son las ooperaciones disponibles para cada endpoint:
@@ -105,7 +105,7 @@ api.workers.get(queryParams="")
 ```
 
 Opcionalmente, podemos utilizar `queryParams` en los recursos que lo soportan.  
-En la [documentación de la API](https://docs.onfleet.com/) están descritos qué recursos lo permiten.
+En la [documentación de la API](https://docs.onfleet.com/) se describe qué recursos lo permiten.
 ```python
 # Opción 1
 api.workers.get(queryParams="phones=<phone_number>")
@@ -116,25 +116,25 @@ api.workers.get(queryParams={"phones": "<phone_number>"})
 
 Para obtener un elemento en particular dentro de un recurso se puede localizar mediante un parámetro específico, así:
 ```python
-get(parametro="<dato>")
+get(parametro="<valor>")
 ```
 
 ##### Ejemplos de `get(parametro)`
 ```python
-api.workers.get(id="<ID_de_24_digitos>")
-api.workers.get(id="<ID_de_24_digitos>", queryParams={"analytics": "true"})
+api.workers.get(id="<24_digit_ID>")
+api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
 
-api.tasks.get(shortId="<shortID>")
+api.tasks.get(shortId="<shortId>")
 
 api.recipients.get(phone="<phone_number>")
 api.recipients.get(name="<name>")
 
-api.containers.get(workers="<ID_de_un_worker>")
-api.containers.get(teams="<ID_de_un_team>")
-api.containers.get(organizations="<ID_de_un_organization>")
+api.containers.get(workers="<worker_ID>")
+api.containers.get(teams="<team_ID>")
+api.containers.get(organizations="<organization_ID>")
 ```
 
-Para obtener un conductor según su ubicación, podemos utilizar la funcion `getByLocation`:
+Para obtener un conductor según su ubicación, podemos utilizar la función `getByLocation`:
 ```python
 getByLocation(queryParams="<datos_de_ubicacion>")
 ```
@@ -153,15 +153,15 @@ api.workers.getByLocation(queryParams=datos_de_ubicacion)
 #### Peticiones POST
 Para crear un elemento de un recurso:
 ```python
-create(body="<datos>")
+create(body="<data>")
 ```
 
 ##### Ejemplos de `create()`
 ```python
 datos = {
-    "name": "Hola Mundo",
+    "name": "Juan Conductor",
     "phone": "+16173428853",
-    "teams": ["<ID_de_un_team>", "<otro_ID_de_un_team> (opcional)", ...],
+    "teams": ["<team_ID>", "<team_ID> (opcional)", ...],
     "vehicle": {
         "type": "CAR",
         "description": "Tesla Model S",
@@ -176,16 +176,16 @@ api.workers.create(body=datos)
 Otras peticiones POST incluyen `clone`, `forceComplete`, `batchCreate`, `autoAssign` en el recurso *Tasks*; `setSchedule` en el recurso *Workers*; `autoDispatch` en el recurso *Teams*; y `matchMetadata` en todos los recursos que lo soportan. Por ejemplo:
 
 ```python
-api.tasks.clone(id="<ID_de_24_digitos>")
-api.tasks.forceComplete(id="<ID_de_24_digitos>", body="<datos>")
-api.tasks.batchCreate(body="<datos>")
-api.tasks.autoAssign(body="<datos>")
+api.tasks.clone(id="<24_digit_ID>")
+api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
+api.tasks.batchCreate(body="<data>")
+api.tasks.autoAssign(body="<data>")
 
-api.workers.setSchedule(id="<ID_de_24_digitos>", body="<datos>")
+api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
-api.teams.autoDispatch(id="<ID_de_24_digitos>", body="<datos>")
+api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-api.<recurso>.matchMetadata(body="<datos>")
+api.<entity>.matchMetadata(body="<data>")
 ```
 
 Para más información, podemos consultar la documentación sobre [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule) y [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata).
@@ -194,38 +194,38 @@ Para más información, podemos consultar la documentación sobre [`clone`](http
 #### Peticiones PUT
 Para modificar un elemento de un recurso:
 ```python
-update(id="<ID_de_24_digitos>", body="<datos>")
+update(id="<24_digit_ID>", body="<data>")
 ```
 
 ##### Ejemplos de `update()`
 ```python
 datos_nuevos = {
-    "name": "Nombre Nuevo",
+    "name": "Felipe Conductor",
 }
 
-api.workers.update(id="<ID_de_24_digitos>", body=datos_nuevos)
+api.workers.update(id="<24_digit_ID>", body=datos_nuevos)
 ```
 
 ##### Ejemplos de `updateSchedule()`
 ```python
-api.workers.updateSchedule(id="<ID_de_24_digitos>", body="<datos>")
+api.workers.updateSchedule(id="<24_digit_ID>", body="<data>")
 ```
 Para más información, podemos consultar la documentación sobre [`updateSchedule`](https://docs.onfleet.com/reference#update-workers-schedule).
 
 ##### Ejemplos de `insertTask()`
 ```python
-api.workers.insertTask(id="<ID_de_24_digitos>", body="<datos>")
+api.workers.insertTask(id="<24_digit_ID>", body="<data>")
 ```
 
 #### Peticiones DELETE
 Para eliminar un elemento de un recurso:
 ```python
-deleteOne(id="<ID_de_24_digitos>")
+deleteOne(id="<24_digit_ID>")
 ```
 
 ##### Ejemplos de `deleteOne()`
 ```python
-api.workers.deleteOne(id="<ID_de_24_digitos>")
+api.workers.deleteOne(id="<24_digit_ID>")
 ```
 
 *Ir al [inicio](#onfleet-python-wrapper)*.

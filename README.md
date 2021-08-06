@@ -140,13 +140,13 @@ getByLocation(queryParams="<location_data>")
 
 ##### Examples of `getByLocation`:
 ```python
-location_data = {
+location_params = {
     "longitude": "-122.4",
     "latitude": "37.7601983",
     "radius": "6000",
 }
 
-api.workers.getByLocation(queryParams=location_data)
+api.workers.getByLocation(queryParams=location_params)
 ```
 
 #### POST Requests
@@ -158,9 +158,9 @@ create(body="<data>")
 ##### Examples of `create()`
 ```python
 data = {
-    "name": "A Swartz Test",
+    "name": "John Driver",
     "phone": "+16173428853",
-    "teams": ["<a_team_ID>", "<another_team_ID> (optional)", ...],
+    "teams": ["<team_ID>", "<team_ID> (optional)", ...],
     "vehicle": {
         "type": "CAR",
         "description": "Tesla Model S",
