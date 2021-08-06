@@ -45,13 +45,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rate limiter
 ### Fixed
 - Bug on directories when using Windows environment (#10)
-- Issues found on wheel distribution and some bug in locating directories *
+- Issues found on wheel distribution and some bug in locating directories
 
 ## [1.0.1] - 2019-05-22
 ### Added
 - Initial release on PyPI
-
-*\* Special release*
 
 [Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.1.5...HEAD
 [1.1.5]: https://github.com/onfleet/pyonfleet/compare/v1.1.4...v1.1.5
