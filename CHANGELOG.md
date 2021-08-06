@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.3] - 2021-03-08
 ### Added
-- Error causes to `HttpError` class
+- Error causes to `HttpError` class (#19)
 ### Changed
 - Expand terminology for Admins API endpoint
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1] - 2020-11-10
 ### Fixed
-- Distribution wheel containing redundant files (kudos to [@bbradshaw](https://github.com/bbradshaw) for noticing)
+- Distribution wheel containing redundant files (kudos to @bbradshaw for noticing)
 
 ## ~~[1.1.0] - 2020-08-19 -~~ Yanked
 ### Changed
@@ -44,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Rate limiter
 ### Fixed
-- Bug on directories when using Windows environment
+- Bug on directories when using Windows environment (#10)
 - Issues found on wheel distribution and some bug in locating directories *
 
 ## [1.0.1] - 2019-05-22
@@ -61,4 +61,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.1.1]: https://github.com/onfleet/pyonfleet/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/onfleet/pyonfleet/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/onfleet/pyonfleet/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/onfleet/pyonfleet/releases/tag/v0
+[1.0.1]: https://github.com/onfleet/pyonfleet/releases/tag/v1.0.1
