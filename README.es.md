@@ -57,7 +57,7 @@ El formato del archivo `.auth.json` es el siguiente:
 }
 ```
 
-También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar la llave directamente en cada petición:
+También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar la llave cuando creamos una instancia de `Onfleet`:
 ```python
 from onfleet import Onfleet
 
@@ -71,7 +71,7 @@ api = Onfleet(api_key="<your_api_key>")  # Sin el archivo .auth.json
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
 
 ### Límites
-La API impone un límite de 20 peticiones por segundo sumando las peticiones de todas las llaves de la organización. Más detalles [aquí](https://docs.onfleet.com/reference#throttling).
+La API impone un límite de 20 peticiones por segundo entre todas las peticiones de todas las llaves de la organización. Más detalles [aquí](https://docs.onfleet.com/reference#throttling).
 
 ### Respuestas
 Las respuestas de esta librería son instancias de [Response](https://2.python-requests.org//en/master/api/#requests.Response) de la librería `requests`.
@@ -134,7 +134,7 @@ api.containers.get(teams="<team_ID>")
 api.containers.get(organizations="<organization_ID>")
 ```
 
-Para obtener un conductor según su ubicación, podemos utilizar la función `getByLocation`:
+Para obtener un driver según su ubicación, podemos utilizar la función `getByLocation`:
 ```python
 getByLocation(queryParams="<location_params>")
 ```

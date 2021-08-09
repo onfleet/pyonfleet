@@ -56,7 +56,7 @@ The format of `.auth.json` is shown below:
 }
 ```
 
-You can also opt in to not store your API key here and include it on every request:
+You can also opt in to not store your API key here and pass it as param to `Onfleet`:
 ```python
 from onfleet import Onfleet
 
@@ -67,7 +67,7 @@ api = Onfleet()  # Using the .auth.json file
 api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
-Once the Onfleet object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/).
+Once the `Onfleet` object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/).
 
 ### Throttling
 Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys. Learn more about it [here](https://docs.onfleet.com/reference#throttling).
