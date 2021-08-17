@@ -9,11 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.6] - 2021-08-17
 ### Added
 - New module: `_meta.py`
-
 ### Changed
 - In `setup.py`, reads version from the meta module
 - Update .gitignore
-
 ### Fixed
 - In `requests.py`, imports version from the meta module –no need for `pkg_resources` (#18)
 
