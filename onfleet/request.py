@@ -1,19 +1,24 @@
 import json
-import pkg_resources
 import re
 import time
 import urllib.parse
-from onfleet.error import PermissionError, HttpError, RateLimitError, ServiceError
+
 from ratelimit import limits
 from backoff import on_exception, expo
 
+from onfleet._meta import __version__
+from onfleet.error import PermissionError, HttpError, RateLimitError, ServiceError
+
 RATE_LIMIT = 20
+
+
 class Request:
+
     def __init__(self, http_method, path, session):
         self.default_url = "https://onfleet.com/api/v2"
         self.default_headers = {
             "Content-Type": "application/json",
-            "User-Agent": "pyonfleet-" + pkg_resources.require("pyonfleet")[0].version
+            "User-Agent": f"pyonfleet-{__version__}"
         }
         self.session = session
         self.path = path
