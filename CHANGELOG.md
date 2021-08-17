@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.6] - 2021-08-17
+### Added
+- New module: `_meta.py`
+
+### Changed
+- In `setup.py`, reads version from the meta module
+- Update .gitignore
+
+### Fixed
+- In `requests.py`, imports version from the meta module –no need for `pkg_resources` (#18)
+
 ## [1.1.5] - 2021-06-28
 ### Added
 - Add POST and PUT support to Hubs endpoint
@@ -51,7 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release on PyPI
 
-[Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.1.5...HEAD
+[Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.1.6...HEAD
+[1.1.6]: https://github.com/onfleet/pyonfleet/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/onfleet/pyonfleet/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/onfleet/pyonfleet/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/onfleet/pyonfleet/compare/v1.1.2...v1.1.3
