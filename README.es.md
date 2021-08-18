@@ -47,7 +47,7 @@ Antes de usar la librería, es indispensable obtener una llave para la API a tra
 La creación e integración de llaves se realiza a través del [panel principal de Onfleet](https://onfleet.com/dashboard#/manage).
 
 Para autenticarse en la API es necesario también crear un archivo `.auth.json` dentro del directorio de trabajo.  
-En este archivo es donde se almacenarán las credenciales de la onfleet_api.
+En este archivo es donde se almacenarán las credenciales de la API.
 
 El formato del archivo `.auth.json` es el siguiente:
 ```json

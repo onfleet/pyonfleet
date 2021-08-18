@@ -34,7 +34,7 @@ If you have any questions, please reach us by submitting an issue [here](https:/
             - [Examples of `deleteOne()`](#examples-of-deleteone)
 
 ## Synopsis
-The Onfleet Python library provides convenient access to the Onfleet onfleet_api. 
+The Onfleet Python library provides convenient access to the Onfleet API. 
 
 ## Installation
 ```
