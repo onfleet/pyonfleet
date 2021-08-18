@@ -17,20 +17,19 @@
 * [概要](#概要)
 * [安裝](#安裝)
 * [使用守則](#使用守則)
-* [API速限](#API速限)
-* [請求回應](#請求回應)
-* [支援的CRUD操作](#支援的CRUD操作)
-    - [GET 請求](#get-請求)
-        * [使用`get`展示所有資源的範例](#使用get展示所有資源的範例)
-        * [使用`get(param)`展示指定資源的範例](#使用get展示指定資源的範例)
-    - [POST 請求](#post-請求)
-        * [使用`create`提交指定資源的範例](#使用create提交指定資源的範例)
-    - [PUT 請求](#put-請求)
-        * [使用`update`取代指定資源的範例](#使用update取代指定資源的範例)
-        * [使用`insertTask`取代指定資源的範例](#使用insertTask取代指定資源的範例)
-    - [DELETE 請求](#delete-請求)
-        * [使用`deleteOne`刪除指定資源的範例](#使用deleteone刪除指定資源的範例)
-
+    - [API速限](#API速限)
+    - [請求回應](#請求回應)
+    - [支援的CRUD操作](#支援的CRUD操作)
+        * [GET 請求](#get-請求)
+            - [使用`get`展示所有資源的範例](#使用get展示所有資源的範例)
+            - [使用`get(param)`展示指定資源的範例](#使用getparam展示指定資源的範例)
+        * [POST 請求](#post-請求)
+            - [使用`create`提交指定資源的範例](#使用create提交指定資源的範例)
+        * [PUT 請求](#put-請求)
+            - [使用`update`取代指定資源的範例](#使用update取代指定資源的範例)
+            - [使用`insertTask`取代指定資源的範例](#使用inserttask取代指定資源的範例)
+        * [DELETE 請求](#delete-請求)
+            - [使用`deleteOne`刪除指定資源的範例](#使用deleteone刪除指定資源的範例)
 
 ## 概要
 `python_onfleet` 提供一個快速又便捷的方式，以獲取Onfleet應用程式介面內的資料。
@@ -56,14 +55,16 @@ pip install pyonfleet
 當Onfleet物件成功被創建，而金鑰又是合法的，您會獲得訪問以下各endpoint資源的函式。欲獲得各endpoint資源的定義，請洽[Onfleet官方應用程式介面文件](http://docs.onfleet.com/)。
 
 假如您不想儲存金鑰至檔案內，您亦可以直接引入API金鑰做為一參數：
-
 ```python
 from onfleet import Onfleet
 
-api = Onfleet()  # 有.auth.json檔案的前提
+# Option 1 - Recommended
+onfleet_api = Onfleet()  # Using the .auth.json file
 
-api = Onfleet(api_key="<your_api_key>")  # 直接引入參數
+# Option 2
+onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
+
 ### API速限
 原則上API的速限為每秒鐘20次請求，詳情請參考[官方文件](https://docs.onfleet.com/reference#throttling)。
 
@@ -138,7 +139,7 @@ create(body="<data>")
 data = {
     "name": "John Driver",
     "phone": "+16173428853",
-    "teams": ["<team_ID>", "<team_ID> (optional)", ...],
+    "teams": ["<team_ID>", "<team_ID> (optional)", "..."],
     "vehicle": {
         "type": "CAR",
         "description": "Tesla Model S",
@@ -161,7 +162,7 @@ onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
 onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-onfleet_api.<entity>.matchMetadata(body="<data>")
+onfleet_api.<entity_name_pluralized>.matchMetadata(body="<data>")
 ```
 
 參考資料：[`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata), 以及[`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch)。

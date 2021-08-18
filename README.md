@@ -18,20 +18,20 @@ If you have any questions, please reach us by submitting an issue [here](https:/
 * [Synopsis](#synopsis)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Throttling](#throttling)
-* [Responses](#responses)
-* [Supported CRUD operations](#supported-crud-operations)
-    - [GET Requests](#get-requests)
-        * [Examples of `get()`](#examples-of-get)
-        * [Examples of `get(param)`](#examples-of-getparam)
-        * [Examples of `getByLocation`](#examples-of-getbylocation)
-    - [POST Requests](#post-requests)
-        * [Examples of `create()`](#examples-of-create)
-    - [PUT Requests](#put-requests)
-        * [Examples of `update()`](#examples-of-update)
-        * [Examples of `insertTask()`](#examples-of-inserttask)
-    - [DELETE Requests](#delete-requests)
-        * [Examples of `deleteOne()`](#examples-of-deleteone)
+    - [Throttling](#throttling)
+    - [Responses](#responses)
+    - [Supported CRUD operations](#supported-crud-operations)
+        * [GET Requests](#get-requests)
+            - [Examples of `get()`](#examples-of-get)
+            - [Examples of `get(param)`](#examples-of-getparam)
+            - [Examples of `getByLocation`](#examples-of-getbylocation)
+        * [POST Requests](#post-requests)
+            - [Examples of `create()`](#examples-of-create)
+        * [PUT Requests](#put-requests)
+            - [Examples of `update()`](#examples-of-update)
+            - [Examples of `insertTask()`](#examples-of-inserttask)
+        * [DELETE Requests](#delete-requests)
+            - [Examples of `deleteOne()`](#examples-of-deleteone)
 
 ## Synopsis
 The Onfleet Python library provides convenient access to the Onfleet onfleet_api. 
@@ -183,7 +183,7 @@ onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
 onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-onfleet_api.<entity_in_plural>.matchMetadata(body="<data>")
+onfleet_api.<entity_name_pluralized>.matchMetadata(body="<data>")
 ```
 
 For more details, check our documentation on [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata), and [`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch).

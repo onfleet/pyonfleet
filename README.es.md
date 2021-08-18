@@ -18,20 +18,20 @@ En caso de preguntas, pueden contactarnos a través de un issue [aquí](https://
 * [Sinopsis](#sinopsis)
 * [Instalación](#instalación)
 * [Uso](#uso)
-* [Límites](#límites)
-* [Respuestas](#respuestas)
-* [Operaciones CRUD soportadas](#operaciones-crud-soportadas)
-    - [Peticiones GET](#peticiones-get)
-        * [Ejemplos de `get()`](#ejemplos-de-get)
-        * [Ejemplos de `get(parametro)`](#ejemplos-de-getparametro)
-        * [Ejemplos de `getByLocation`](#ejemplos-de-getbylocation)
-    - [Peticiones POST](#peticiones-post)
-        * [Ejemplos de `create()`](#ejemplos-de-create)
-    - [Peticiones PUT](#peticiones-put)
-        * [Ejemplos de `update()`](#ejemplos-de-update)
-        * [Ejemplos de `insertTask()`](#ejemplos-de-inserttask)
-    - [Peticiones DELETE](#peticiones-delete)
-        * [Ejemplos de `deleteOne()`](#ejemplos-de-deleteone)
+    - [Límites](#límites)
+    - [Respuestas](#respuestas)
+    - [Operaciones CRUD soportadas](#operaciones-crud-soportadas)
+        * [Peticiones GET](#peticiones-get)
+            - [Ejemplos de `get()`](#ejemplos-de-get)
+            - [Ejemplos de `get(parametro)`](#ejemplos-de-getparametro)
+            - [Ejemplos de `getByLocation`](#ejemplos-de-getbylocation)
+        * [Peticiones POST](#peticiones-post)
+            - [Ejemplos de `create()`](#ejemplos-de-create)
+        * [Peticiones PUT](#peticiones-put)
+            - [Ejemplos de `update()`](#ejemplos-de-update)
+            - [Ejemplos de `insertTask()`](#ejemplos-de-inserttask)
+        * [Peticiones DELETE](#peticiones-delete)
+            - [Ejemplos de `deleteOne()`](#ejemplos-de-deleteone)
 
 ## Sinopsis
 La librería en Python de Onfleet nos permite un acceso fácil y cómodo a la API de Onfleet.
@@ -160,7 +160,7 @@ create(body="<data>")
 data = {
     "name": "John Driver",
     "phone": "+16173428853",
-    "teams": ["<team_ID>", "<team_ID> (opcional)", ...],
+    "teams": ["<team_ID>", "<team_ID> (optional)", "..."],
     "vehicle": {
         "type": "CAR",
         "description": "Tesla Model S",
@@ -184,7 +184,7 @@ onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
 onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-onfleet_api.<entity>.matchMetadata(body="<data>")
+onfleet_api.<entity_name_pluralized>.matchMetadata(body="<data>")
 ```
 
 Para más información, podemos consultar la documentación sobre [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule). [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata) y [`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch).
