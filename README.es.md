@@ -6,7 +6,7 @@
 ![GitHub - Lenguaje principal](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
 [![PyPI - Descargas](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
-> *Este documento esta disponible en otros idiomas*:  
+> *Consulta este documento en otro idioma*:  
 > [English](https://github.com/onfleet/pyonfleet/blob/master/README.md)  
 > [正體中文](https://github.com/onfleet/pyonfleet/blob/master/README.zh-tw.md)  
 
