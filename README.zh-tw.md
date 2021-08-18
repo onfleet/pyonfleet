@@ -74,13 +74,13 @@ api = Onfleet(api_key="<your_api_key>")  # 直接引入參數
 下面為各entity所支援的函式列表：
 
 | Entity | GET | POST | PUT | DELETE |
-|:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
+| :-: | :-: | :-: | :-: | :-: |
 | [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
 | [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body), matchMetadata(body) | x | x |
 | [Hubs](https://docs.onfleet.com/reference#hubs) | get() | create(body) | update(id, body) | x |
 | [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
-| [Recipients](https://docs.onfleet.com/reference#recipients)  | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
+| [Recipients](https://docs.onfleet.com/reference#recipients) | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
 | [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id), getWorkerEta(id, queryParams) | create(body), autoDispatch(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 | [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
@@ -94,17 +94,17 @@ get()
 
 ##### 使用`get`展示所有資源的範例
 ```python
-api.workers.get()
-api.workers.get(queryParams="")
+onfleet_api.workers.get()
+onfleet_api.workers.get(queryParams="")
 ```
 
 部分的endpoint有支援`queryParams`（查詢參數），詳情請參考Onfleet官方文件：
 ```python
 # Option 1
-api.workers.get(queryParams="phones=<phone_number>")
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 
 # Option 2
-api.workers.get(queryParams={"phones": "<phone_number>"})
+onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
 ```
 
 展示指定資源的指令如下，根據欲展示的資源參數取代`param`則會根據參數做展示：
@@ -114,17 +114,17 @@ get(param=<some_param>)
 
 ##### 使用`get(param)`展示指定資源的範例
 ```python
-api.workers.get(id="<24_digit_ID>")
-api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
+onfleet_api.workers.get(id="<24_digit_ID>")
+onfleet_api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
 
-api.tasks.get(shortId="<shortId>")
+onfleet_api.tasks.get(shortId="<shortId>")
 
-api.recipients.get(phone="<phone_number>")
-api.recipients.get(name="<name>")
+onfleet_api.recipients.get(phone="<phone_number>")
+onfleet_api.recipients.get(name="<name>")
 
-api.containers.get(workers="<worker_ID>")
-api.containers.get(teams="<team_ID>")
-api.containers.get(organizations="<organization_ID>")
+onfleet_api.containers.get(workers="<worker_ID>")
+onfleet_api.containers.get(teams="<team_ID>")
+onfleet_api.containers.get(organizations="<organization_ID>")
 ```
 
 #### POST 請求
@@ -147,21 +147,21 @@ data = {
     },
 }
 
-api.workers.create(body=data)
+onfleet_api.workers.create(body=data)
 ```
 其他延伸的POST請求包含了*Tasks*節點上的`clone`, `forceComplete`, `batchCreate`, `autoAssign`，*Workers*節點上的`setSchedule`，*Teams*節點上的`autoDispatch`，以及所有支持節點上的`matchMetadata`：
 
 ```python
-api.tasks.clone(id="<24_digit_ID>")
-api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
-api.tasks.batchCreate(body="<data>")
-api.tasks.autoAssign(body="<data>")
+onfleet_api.tasks.clone(id="<24_digit_ID>")
+onfleet_api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
+onfleet_api.tasks.batchCreate(body="<data>")
+onfleet_api.tasks.autoAssign(body="<data>")
 
-api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
+onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
-api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
+onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-api.<entity>.matchMetadata(body="<data>")
+onfleet_api.<entity>.matchMetadata(body="<data>")
 ```
 
 參考資料：[`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata), 以及[`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch)。
@@ -178,18 +178,12 @@ new_data = {
     "name": "Jack Driver",
 }
 
-api.workers.update(id="<24_digit_ID>", body=new_data)
+onfleet_api.workers.update(id="<24_digit_ID>", body=new_data)
 ```
-
-其他延伸的PUT請求包含了`updateSchedule`：
-```python
-api.workers.updateSchedule(id="<24_digit_ID>", body="<data>")
-```
-參考資料：[updateSchedule](https://docs.onfleet.com/reference#update-workers-schedule)
 
 ##### 使用`insertTask`取代指定資源的範例
 ```python
-api.workers.insertTask(id="24_digit_ID", body="<data>")
+onfleet_api.workers.insertTask(id="24_digit_ID", body="<data>")
 ```
 
 #### DELETE 請求
@@ -200,7 +194,7 @@ deleteOne(id="<24_digit_ID>")
 
 ##### 使用`deleteOne`刪除指定資源的範例
 ```python
-api.workers.deleteOne(id="<24_digit_ID>")
+onfleet_api.workers.deleteOne(id="<24_digit_ID>")
 ```
 
 *返回[頂端](#onfleet-python-wrapper)*。

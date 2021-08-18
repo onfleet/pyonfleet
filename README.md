@@ -29,13 +29,12 @@ If you have any questions, please reach us by submitting an issue [here](https:/
         * [Examples of `create()`](#examples-of-create)
     - [PUT Requests](#put-requests)
         * [Examples of `update()`](#examples-of-update)
-        * [Examples of `updateSchedule()`](#examples-of-updateschedule)
         * [Examples of `insertTask()`](#examples-of-inserttask)
     - [DELETE Requests](#delete-requests)
         * [Examples of `deleteOne()`](#examples-of-deleteone)
 
 ## Synopsis
-The Onfleet Python library provides convenient access to the Onfleet API. 
+The Onfleet Python library provides convenient access to the Onfleet onfleet_api. 
 
 ## Installation
 ```
@@ -61,10 +60,10 @@ You can also opt in to not store your API key here and pass it as param to `Onfl
 from onfleet import Onfleet
 
 # Option 1 - Recommended
-api = Onfleet()  # Using the .auth.json file
+onfleet_api = Onfleet()  # Using the .auth.json file
 
 # Option 2
-api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
+onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
 Once the `Onfleet` object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/).
@@ -79,13 +78,13 @@ Responses of this library are instances of [Response](https://2.python-requests.
 Here are the operations available for each entity:
 
 | Entity | GET | POST | PUT | DELETE |
-|:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
+| :-: | :-: | :-: | :-: | :-: |
 | [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
 | [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body), matchMetadata(body) | x | x |
 | [Hubs](https://docs.onfleet.com/reference#hubs) | get() | create(body) | update(id, body) | x |
 | [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
-| [Recipients](https://docs.onfleet.com/reference#recipients)  | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
+| [Recipients](https://docs.onfleet.com/reference#recipients) | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
 | [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id), getWorkerEta(id, queryParams) | create(body), autoDispatch(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 | [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
@@ -99,18 +98,18 @@ get()
 
 ##### Examples of `get()`
 ```python
-api.workers.get()
-api.workers.get(queryParams="")
+onfleet_api.workers.get()
+onfleet_api.workers.get(queryParams="")
 ```
 
 Optionally you can use `queryParams` for some certain endpoints.  
 Refer back to [API documentation](https://docs.onfleet.com/) for endpoints that support query parameters.
 ```python
 # Option 1
-api.workers.get(queryParams="phones=<phone_number>")
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 
 # Option 2
-api.workers.get(queryParams={"phones": "<phone_number>"})
+onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
 ```
 
 To get one of the document within an endpoint, specify the param that you wish to search by:
@@ -120,17 +119,17 @@ get(param="<value>")
 
 ##### Examples of `get(param)`
 ```python
-api.workers.get(id="<24_digit_ID>")
-api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
+onfleet_api.workers.get(id="<24_digit_ID>")
+onfleet_api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
 
-api.tasks.get(shortId="<shortId>")
+onfleet_api.tasks.get(shortId="<shortId>")
 
-api.recipients.get(phone="<phone_number>")
-api.recipients.get(name="<name>")
+onfleet_api.recipients.get(phone="<phone_number>")
+onfleet_api.recipients.get(name="<name>")
 
-api.containers.get(workers="<worker_ID>")
-api.containers.get(teams="<team_ID>")
-api.containers.get(organizations="<organization_ID>")
+onfleet_api.containers.get(workers="<worker_ID>")
+onfleet_api.containers.get(teams="<team_ID>")
+onfleet_api.containers.get(organizations="<organization_ID>")
 ```
 
 To get a driver by location, use the `getByLocation` function:
@@ -138,7 +137,7 @@ To get a driver by location, use the `getByLocation` function:
 getByLocation(queryParams="<location_params>")
 ```
 
-##### Examples of `getByLocation`:
+##### Examples of `getByLocation`
 ```python
 location_params = {
     "longitude": "-122.4",
@@ -146,7 +145,7 @@ location_params = {
     "radius": "6000",
 }
 
-api.workers.getByLocation(queryParams=location_params)
+onfleet_api.workers.getByLocation(queryParams=location_params)
 ```
 
 #### POST Requests
@@ -160,7 +159,7 @@ create(body="<data>")
 data = {
     "name": "John Driver",
     "phone": "+16173428853",
-    "teams": ["<team_ID>", "<team_ID> (optional)", ...],
+    "teams": ["<team_ID>", "<team_ID> (optional)", "..."],
     "vehicle": {
         "type": "CAR",
         "description": "Tesla Model S",
@@ -169,25 +168,25 @@ data = {
     },
 }
 
-api.workers.create(body=data)
+onfleet_api.workers.create(body=data)
 ```
 
 Extended POST requests include `clone`, `forceComplete`, `batchCreate`, `autoAssign` on the *Tasks* endpoint; `setSchedule` on the *Workers* endpoint; `autoDispatch` on the *Teams* endpoint; and `matchMetadata` on all supported entities. For instance:
 
 ```python
-api.tasks.clone(id="<24_digit_ID>")
-api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
-api.tasks.batchCreate(body="<data>")
-api.tasks.autoAssign(body="<data>")
+onfleet_api.tasks.clone(id="<24_digit_ID>")
+onfleet_api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
+onfleet_api.tasks.batchCreate(body="<data>")
+onfleet_api.tasks.autoAssign(body="<data>")
 
-api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
+onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
-api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
+onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-api.<entity>.matchMetadata(body="<data>")
+onfleet_api.<entity_in_plural>.matchMetadata(body="<data>")
 ```
 
-For more details, check our documentation on [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), and [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata).
+For more details, check our documentation on [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata), and [`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch).
 
 
 #### PUT Requests
@@ -202,18 +201,12 @@ new_data = {
     "name": "Jack Driver",
 }
 
-api.workers.update(id="<24_digit_ID>", body=new_data)
+onfleet_api.workers.update(id="<24_digit_ID>", body=new_data)
 ```
-
-##### Examples of `updateSchedule()`
-```python
-api.workers.updateSchedule(id="<24_digit_ID>", body="<data>")
-```
-For more details, check our documentation on [`updateSchedule`](https://docs.onfleet.com/reference#update-workers-schedule)
 
 ##### Examples of `insertTask()`
 ```python
-api.workers.insertTask(id="<24_digit_ID>", body="<data>")
+onfleet_api.workers.insertTask(id="<24_digit_ID>", body="<data>")
 ```
 
 #### DELETE Requests
@@ -224,7 +217,7 @@ deleteOne(id="<24_digit_ID>")
 
 ##### Examples of `deleteOne()`
 ```python
-api.workers.deleteOne(id="<24_digit_ID>")
+onfleet_api.workers.deleteOne(id="<24_digit_ID>")
 ```
 
 *Go to [top](#onfleet-python-wrapper)*.

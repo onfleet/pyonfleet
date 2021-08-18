@@ -29,7 +29,6 @@ En caso de preguntas, pueden contactarnos a través de un issue [aquí](https://
         * [Ejemplos de `create()`](#ejemplos-de-create)
     - [Peticiones PUT](#peticiones-put)
         * [Ejemplos de `update()`](#ejemplos-de-update)
-        * [Ejemplos de `updateSchedule()`](#ejemplos-de-updateschedule)
         * [Ejemplos de `insertTask()`](#ejemplos-de-inserttask)
     - [Peticiones DELETE](#peticiones-delete)
         * [Ejemplos de `deleteOne()`](#ejemplos-de-deleteone)
@@ -48,7 +47,7 @@ Antes de usar la librería, es indispensable obtener una llave para la API a tra
 La creación e integración de llaves se realiza a través del [panel principal de Onfleet](https://onfleet.com/dashboard#/manage).
 
 Para autenticarse en la API es necesario también crear un archivo `.auth.json` dentro del directorio de trabajo.  
-En este archivo es donde se almacenarán las credenciales de la API.
+En este archivo es donde se almacenarán las credenciales de la onfleet_api.
 
 El formato del archivo `.auth.json` es el siguiente:
 ```json
@@ -62,10 +61,10 @@ También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar
 from onfleet import Onfleet
 
 # Opción 1 - Recomendada
-api = Onfleet()  # Utilizando el archivo .auth.json
+onfleet_api = Onfleet()  # Utilizando el archivo .auth.json
 
 # Opción 2
-api = Onfleet(api_key="<your_api_key>")  # Sin el archivo .auth.json
+onfleet_api = Onfleet(api_key="<your_api_key>")  # Sin el archivo .auth.json
 ```
 
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
@@ -79,14 +78,14 @@ Las respuestas de esta librería son instancias de [Response](https://2.python-r
 ### Operaciones CRUD soportadas
 Estas son las operaciones disponibles para cada endpoint:
 
-| Recurso | GET | POST | PUT | DELETE |
-|:------------:|:---------------------------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------:|:-------------:|
+| Entity | GET | POST | PUT | DELETE |
+| :-: | :-: | :-: | :-: | :-: |
 | [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
 | [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body), matchMetadata(body) | x | x |
 | [Hubs](https://docs.onfleet.com/reference#hubs) | get() | create(body) | update(id, body) | x |
 | [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
-| [Recipients](https://docs.onfleet.com/reference#recipients)  | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
+| [Recipients](https://docs.onfleet.com/reference#recipients) | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
 | [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
 | [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id), getWorkerEta(id, queryParams) | create(body), autoDispatch(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
 | [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
@@ -100,18 +99,18 @@ get()
 
 ##### Ejemplos de `get()`
 ```python
-api.workers.get()
-api.workers.get(queryParams="")
+onfleet_api.workers.get()
+onfleet_api.workers.get(queryParams="")
 ```
 
 Opcionalmente, podemos utilizar `queryParams` en los recursos que lo soportan.  
 En la [documentación de la API](https://docs.onfleet.com/) se describe qué recursos lo permiten.
 ```python
 # Opción 1
-api.workers.get(queryParams="phones=<phone_number>")
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 
 # Opción 2
-api.workers.get(queryParams={"phones": "<phone_number>"})
+onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
 ```
 
 Para obtener un elemento dentro de un recurso, éste se puede localizar mediante un parámetro específico:
@@ -121,17 +120,17 @@ get(param="<value>")
 
 ##### Ejemplos de `get(parametro)`
 ```python
-api.workers.get(id="<24_digit_ID>")
-api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
+onfleet_api.workers.get(id="<24_digit_ID>")
+onfleet_api.workers.get(id="<24_digit_ID>", queryParams={"analytics": "true"})
 
-api.tasks.get(shortId="<shortId>")
+onfleet_api.tasks.get(shortId="<shortId>")
 
-api.recipients.get(phone="<phone_number>")
-api.recipients.get(name="<name>")
+onfleet_api.recipients.get(phone="<phone_number>")
+onfleet_api.recipients.get(name="<name>")
 
-api.containers.get(workers="<worker_ID>")
-api.containers.get(teams="<team_ID>")
-api.containers.get(organizations="<organization_ID>")
+onfleet_api.containers.get(workers="<worker_ID>")
+onfleet_api.containers.get(teams="<team_ID>")
+onfleet_api.containers.get(organizations="<organization_ID>")
 ```
 
 Para obtener un driver según su ubicación, podemos utilizar la función `getByLocation`:
@@ -139,7 +138,7 @@ Para obtener un driver según su ubicación, podemos utilizar la función `getBy
 getByLocation(queryParams="<location_params>")
 ```
 
-##### Ejemplos de `getByLocation`:
+##### Ejemplos de `getByLocation`
 ```python
 location_params = {
     "longitude": "-122.4",
@@ -147,7 +146,7 @@ location_params = {
     "radius": "6000",
 }
 
-api.workers.getByLocation(queryParams=location_params)
+onfleet_api.workers.getByLocation(queryParams=location_params)
 ```
 
 #### Peticiones POST
@@ -170,25 +169,25 @@ data = {
     },
 }
 
-api.workers.create(body=data)
+onfleet_api.workers.create(body=data)
 ```
 
 Otras peticiones POST incluyen `clone`, `forceComplete`, `batchCreate`, `autoAssign` en el recurso *Tasks*; `setSchedule` en el recurso *Workers*; `autoDispatch` en el recurso *Teams*; y `matchMetadata` en todos los recursos que lo soportan. Por ejemplo:
 
 ```python
-api.tasks.clone(id="<24_digit_ID>")
-api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
-api.tasks.batchCreate(body="<data>")
-api.tasks.autoAssign(body="<data>")
+onfleet_api.tasks.clone(id="<24_digit_ID>")
+onfleet_api.tasks.forceComplete(id="<24_digit_ID>", body="<data>")
+onfleet_api.tasks.batchCreate(body="<data>")
+onfleet_api.tasks.autoAssign(body="<data>")
 
-api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
+onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
 
-api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
+onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
-api.<entity>.matchMetadata(body="<data>")
+onfleet_api.<entity>.matchMetadata(body="<data>")
 ```
 
-Para más información, podemos consultar la documentación sobre [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule) y [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata).
+Para más información, podemos consultar la documentación sobre [`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule). [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata) y [`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch).
 
 
 #### Peticiones PUT
@@ -203,18 +202,12 @@ new_data = {
     "name": "Jack Driver",
 }
 
-api.workers.update(id="<24_digit_ID>", body=new_data)
+onfleet_api.workers.update(id="<24_digit_ID>", body=new_data)
 ```
-
-##### Ejemplos de `updateSchedule()`
-```python
-api.workers.updateSchedule(id="<24_digit_ID>", body="<data>")
-```
-Para más información, podemos consultar la documentación sobre [`updateSchedule`](https://docs.onfleet.com/reference#update-workers-schedule).
 
 ##### Ejemplos de `insertTask()`
 ```python
-api.workers.insertTask(id="<24_digit_ID>", body="<data>")
+onfleet_api.workers.insertTask(id="<24_digit_ID>", body="<data>")
 ```
 
 #### Peticiones DELETE
@@ -225,7 +218,7 @@ deleteOne(id="<24_digit_ID>")
 
 ##### Ejemplos de `deleteOne()`
 ```python
-api.workers.deleteOne(id="<24_digit_ID>")
+onfleet_api.workers.deleteOne(id="<24_digit_ID>")
 ```
 
 *Ir al [inicio](#onfleet-python-wrapper)*.
