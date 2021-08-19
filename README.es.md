@@ -1,10 +1,10 @@
 # Onfleet Python Wrapper
 
 ![Build](https://img.shields.io/travis/onfleet/pyonfleet.svg?style=popout-square)
-[![Licencia](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
-[![PyPI - Versión](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
-![GitHub - Lenguaje principal](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
-[![PyPI - Descargas](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
+[![License](https://img.shields.io/github/license/onfleet/pyonfleet.svg?style=popout-square)](https://github.com/onfleet/pyonfleet/blob/master/LICENSE)
+[![Latest version](https://img.shields.io/pypi/v/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
+![Top language](https://img.shields.io/github/languages/top/onfleet/pyonfleet.svg?style=popout-square)
+[![Downloads](https://img.shields.io/pypi/dm/pyonfleet.svg?style=popout-square)](https://pypi.org/project/pyonfleet/)
 
 > *Consulta este documento en otro idioma*:  
 > [English](https://github.com/onfleet/pyonfleet/blob/master/README.md)  
