@@ -8,10 +8,14 @@ on:
     types: [published]
 
 jobs:
-  deploy:
 
+  build:
     runs-on: ubuntu-latest
+    # TODO: Run tests
 
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
