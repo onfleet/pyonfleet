@@ -9,12 +9,12 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-    # TODO: Run tests
+# TODO: Run tests
+#   build:
+#     runs-on: ubuntu-latest
 
   publish:
-    needs: build
+    #needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
