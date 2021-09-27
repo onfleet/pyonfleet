@@ -1,118 +1,114 @@
 import json
 import re
 import time
-import urllib.parse
 
-from ratelimit import limits
 from backoff import on_exception, expo
+from ratelimit import limits
 
 from onfleet._meta import __version__
+from onfleet.config import API_BASE_URL, RATE_LIMIT
 from onfleet.error import PermissionError, HttpError, RateLimitError, ServiceError
-
-RATE_LIMIT = 20
 
 
 class Request:
+    '''
+    Onfleet API method inside an endpoint (e.g. GET /tasks).
+    '''
 
     def __init__(self, http_method, path, session):
-        self.default_url = "https://onfleet.com/api/v2"
-        self.default_headers = {
-            "Content-Type": "application/json",
-            "User-Agent": f"pyonfleet-{__version__}"
-        }
-        self.session = session
-        self.path = path
         self.http_method = http_method
+        self.path = path
+        self.session = session
+        self.default_headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': f'pyonfleet-{__version__}'
+        }
 
     @on_exception(expo, RateLimitError, max_tries=8)
     @limits(calls=RATE_LIMIT, period=1)
-    def __call__(self, headers=None, queryParams=None, id=None, body=None, **data):
-        method = self.http_method
-        path_selected = self.url_selector(self.path, id, data)
-        url = self.url_joiner(self.default_url, path_selected)
-        if (id):
-            # TODO: checkIdValidity
-            url = self.url_id_replacer(url, id)
-        if (len(data) == 1):
-            for key, value in data.items():
-                url = self.url_endpoint_appender(url, key, value)
+    def __call__(self, id=None, body=None, queryParams=None, **extra_data):
+        obj_id = id  # TODO(julian): `id` is a reserved name, let's rename it to 'obj_id'
+        query_params = id  # TODO(julian): Let's rename `queryParams` to `query_params`
 
-        # Check boolean in queryParams and body
-        queryParams = self.python_boolean_converter(queryParams) if queryParams else None
+        selected_path = self._path_selector(self.path, obj_id)
+        url = f'{API_BASE_URL}{selected_path}'
 
-        # Headers can be override
-        headers = headers or self.default_headers
+        if obj_id:
+            url = self._url_id_setter(url, obj_id)
+        if extra_data:
+            url = self._url_extra_data_setter(url, extra_data)
 
-        # Setting up the HTTP request
         response = self.session.request(
-            method=method,
+            method=self.http_method,
             url=url,
-            headers=headers,
             data=json.dumps(body),
-            params=queryParams
+            params=self._clean_params(query_params),
+            headers=self.default_headers,
         )
-        if (response.ok):
-            rate_remaining = int(response.headers["X-RateLimit-Remaining"])
+
+        if response.ok:
+            rate_remaining = int(response.headers['X-RateLimit-Remaining'])
             if (rate_remaining < 5):
                 time.sleep(1 / rate_remaining)
-            return response.status_code if (method == "DELETE" or "complete" in url) else response.json()
+            return response.status_code if (self.http_method == 'DELETE' or 'complete' in url) else response.json()
 
         error = json.loads(response.text)
         try:
-            error_code = error["message"]["error"]
-            error_message = error["message"]["message"]
-            error_request = error["message"]["request"]
-            error_cause = error["message"].get("cause")
+            error_code = error['message']['error']
+            error_message = error['message']['message']
+            error_request = error['message']['request']
+            error_cause = error['message'].get('cause')
         except TypeError:
-            raise HttpError(error.get("message"), response.status_code, None)
-        if (error_code <= 1108 and error_code >= 1100):
+            raise HttpError(error.get('message'), response.status_code)
+
+        if error_code <= 1108 and error_code >= 1100:
             raise PermissionError(error_message, error_code, error_request)
-        elif (error_code == 2300):
+        elif error_code == 2300:
             raise RateLimitError(error_message, error_code, error_request)
-        elif (error_code >= 2500):
+        elif error_code >= 2500:
             raise ServiceError(error_message, error_code, error_request)
-        else:
-            raise HttpError(error_message, error_code, error_request, error_cause)
+        raise HttpError(error_message, error_code, error_request, error_cause)
 
     @staticmethod
-    def url_joiner(url, path):
-        return '/'.join(element.strip("/") for element in [url, path])
+    def _path_selector(path, _id):
+        # Only one path available
+        if type(path) is str:
+            return path
+
+        # Special case for GET:
+        # `path` can be a list of up to 2 paths: to get all resources and to get a specific one.
+        # e.g. 'GET /workers' returns all workers and 'GET /workers/123' returns worker with ID=123
+        get_url, get_by_id_url = path
+        return get_url if not _id else get_by_id_url
 
     @staticmethod
-    def url_id_replacer(url, id):
-        url = re.sub(r":[a-z]*Id", id, url)
+    def _url_id_setter(url, obj_id):
+        # TODO(julian): Check validity of IDs
+        # e.g. '/admins/:adminId', 123 --> '/admins/123'
+        return re.sub(r':[a-z]*Id', obj_id, url)
+
+    @staticmethod
+    def _url_extra_data_setter(url, extra_data):
+        # For now, we only care about just one extra datum
+        key, value = next(iter(extra_data.items()))
+
+        # Special case for 'GET /containers':
+        # We expect a extra datum like `workers=123`, where...
+        # - 'workers' is the type of the entity the container is attached to
+        # - '123' the ID of the entity itself
+        if ':entityType' in url:
+            url = re.sub(r':entityType', key, url)
+            url = re.sub(r':entityId', value, url)
+
+        # Special case for 'shortId'
+        elif key == 'shortId':
+            url = re.sub(r':shortId', f'{key}/{value}', url)
+
         return url
 
     @staticmethod
-    def url_endpoint_appender(url, key, value):
-        if (':param' in url):
-            url = re.sub(r":param", key, url)
-            url = re.sub(r":[a-z]*Id", value, url)
-        else:
-            url = re.sub(r":[a-z]*Id", key, url)
-            url += '/' + urllib.parse.quote(value)
-        return url
-    
-    @staticmethod
-    def url_selector(path, id, data):
-        if (isinstance(path, list)):
-            get_url = path[0]
-            get_by_id_url = path[1]
-            if ("shortId" in data):
-                path_selected = get_by_id_url
-            elif (id is None):
-                path_selected = get_url
-            else:
-                path_selected = get_by_id_url
-        else:
-            path_selected = path
-        return path_selected
-
-    @staticmethod
-    def python_boolean_converter(obj):
-    # Python Boolean converter - if True and False are passed in, convert to 'true' and 'false'
-        for key in obj:
-            if (isinstance(obj[key], bool)):
-                value = str(obj[key]).lower()
-                obj.update({ key: value })
-        return obj
+    def _clean_params(raw_params):
+        if type(raw_params) is str:
+            # 'phones=<phone_number>' --> {'phones': '<phone_number>'}
+            key, value = raw_params.split('=')
+            return {key: f'{value}'}

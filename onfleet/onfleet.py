@@ -14,7 +14,8 @@ class Onfleet(object):
     '''
     _session = requests.Session()
 
-    # Available endpoints
+    # Available endpoints.
+    # Note that all paths must have '/' only at the beginning, not at the end.
 
     admins = Endpoint('admins', ('GET', 'POST', 'PUT', 'DELETE'), _session)
 
@@ -22,7 +23,7 @@ class Onfleet(object):
     administrators.matchMetadata = Request('POST', '/admins/metadata', _session)
 
     containers = Endpoint('containers', ('PUT',), _session)
-    containers.get = Request('GET', '/containers/:param/:containerId', _session)
+    containers.get = Request('GET', '/containers/:entityType/:entityId', _session)
 
     destinations = Endpoint('destinations', ('GET', 'POST'), _session)
     destinations.matchMetadata = Request('POST', '/destinations/metadata', _session)
