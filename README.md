@@ -106,10 +106,10 @@ Optionally you can use `queryParams` for some certain endpoints.
 Refer back to [API documentation](https://docs.onfleet.com/) for endpoints that support query parameters.
 ```python
 # Option 1
-onfleet_api.workers.get(queryParams="phones=<phone_number>")
+onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
 
 # Option 2
-onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 ```
 
 To get one of the document within an endpoint, specify the param that you wish to search by:

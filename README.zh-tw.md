@@ -102,10 +102,10 @@ onfleet_api.workers.get(queryParams="")
 部分的endpoint有支援`queryParams`（查詢參數），詳情請參考Onfleet官方文件：
 ```python
 # Option 1
-onfleet_api.workers.get(queryParams="phones=<phone_number>")
+onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
 
 # Option 2
-onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 ```
 
 展示指定資源的指令如下，根據欲展示的資源參數取代`param`則會根據參數做展示：

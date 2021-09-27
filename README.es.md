@@ -60,11 +60,11 @@ También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar
 ```python
 from onfleet import Onfleet
 
-# Opción 1 - Recomendada
-onfleet_api = Onfleet()  # Utilizando el archivo .auth.json
+# Option 1 - Recommended
+onfleet_api = Onfleet()  # Using the .auth.json file
 
-# Opción 2
-onfleet_api = Onfleet(api_key="<your_api_key>")  # Sin el archivo .auth.json
+# Option 2
+onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
@@ -106,11 +106,11 @@ onfleet_api.workers.get(queryParams="")
 Opcionalmente, podemos utilizar `queryParams` en los recursos que lo soportan.  
 En la [documentación de la API](https://docs.onfleet.com/) se describe qué recursos lo permiten.
 ```python
-# Opción 1
-onfleet_api.workers.get(queryParams="phones=<phone_number>")
-
-# Opción 2
+# Option 1
 onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
+
+# Option 2
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 ```
 
 Para obtener un elemento dentro de un recurso, éste se puede localizar mediante un parámetro específico:
