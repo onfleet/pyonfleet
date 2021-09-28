@@ -1,6 +1,7 @@
 import json
 import re
 import time
+from urllib import parse
 
 from backoff import on_exception, expo
 from ratelimit import limits
@@ -106,9 +107,9 @@ class Request:
             url = re.sub(r':entityType', key, url)
             url = re.sub(r':entityId', value, url)
 
-        # Special case for 'shortId'
-        elif key == 'shortId':
-            url = re.sub(r':[a-z]*Id', f'{key}/{value}', url)
+        # Special cases for specific look-ups
+        elif key in ('shortId', 'name', 'phone'):
+            url = re.sub(r':[a-z]*Id', f'{key}/{parse.quote(value)}', url)
 
         return url
 

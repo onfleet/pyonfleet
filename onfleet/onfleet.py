@@ -35,7 +35,8 @@ class Onfleet(object):
     organization.get = Request('GET', ['/organization', '/organizations/:orgId'], _session)
     organization.insertTask = Request('PUT', '/containers/organization/:taskId', _session)
 
-    recipients = Endpoint('recipients', ('GET', 'POST', 'PUT'), _session)
+    recipients = Endpoint('recipients', ('POST', 'PUT'), _session)
+    recipients.get = Request('GET', '/recipients/:recipientId', _session)
     recipients.matchMetadata = Request('POST', '/recipients/metadata', _session)
 
     tasks = Endpoint('tasks', ('POST', 'PUT', 'DELETE'), _session)
