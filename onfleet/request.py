@@ -7,7 +7,7 @@ from ratelimit import limits
 
 from onfleet._meta import __version__
 from onfleet.config import API_BASE_URL, RATE_LIMIT
-from onfleet.error import PermissionError, HttpError, RateLimitError, ServiceError
+from onfleet.error import HttpError, PermissionError, RateLimitError, ServiceError, ValidationError
 
 
 class Request:
@@ -28,9 +28,9 @@ class Request:
     @limits(calls=RATE_LIMIT, period=1)
     def __call__(self, id=None, body=None, queryParams=None, **extra_data):
         obj_id = id  # TODO(julian): `id` is a reserved name, let's rename it to 'obj_id'
-        query_params = id  # TODO(julian): Let's rename `queryParams` to `query_params`
+        query_params = queryParams  # TODO(julian): Let's rename `queryParams` to `query_params`
 
-        selected_path = self._path_selector(self.path, obj_id)
+        selected_path = self._path_selector(self.path, obj_id, extra_data)
         url = f'{API_BASE_URL}{selected_path}'
 
         if obj_id:
@@ -53,24 +53,30 @@ class Request:
             return response.status_code if (self.http_method == 'DELETE' or 'complete' in url) else response.json()
 
         error = json.loads(response.text)
-        try:
-            error_code = error['message']['error']
-            error_message = error['message']['message']
-            error_request = error['message']['request']
-            error_cause = error['message'].get('cause')
-        except TypeError:
-            raise HttpError(error.get('message'), response.status_code)
+        if type(error['message']) is not dict:
+            raise HttpError(error.get('message', 'Error'), response.status_code)
 
-        if error_code <= 1108 and error_code >= 1100:
-            raise PermissionError(error_message, error_code, error_request)
-        elif error_code == 2300:
-            raise RateLimitError(error_message, error_code, error_request)
-        elif error_code >= 2500:
-            raise ServiceError(error_message, error_code, error_request)
-        raise HttpError(error_message, error_code, error_request, error_cause)
+        error_message = error['message']['message']
+        error_code = error['message']['error']
+        error_request = error['message']['request']
+        error_cause = error['message'].get('cause')
+        exception_args = (error_message, error_code, error_request, error_cause)
+
+        # https://github.com/addyinc/web/blob/master/yerba/config/errors.json
+
+        if 1000 <= error_code <= 1012:  # InvalidContentError
+            raise ValidationError(*exception_args)
+        elif 1100 <= error_code <= 1112 or error_code == 1300:  # InvalidCredentialsError, ForbiddenError
+            raise PermissionError(*exception_args)
+        if 2300 <= error_code <= 2301:  # TooManyRequestsError
+            raise RateLimitError(*exception_args)
+        elif error_code >= 2500:  # InternalError, NotImplementedError, ServiceUnavailableError
+            raise ServiceError(*exception_args)
+
+        raise HttpError(*exception_args)
 
     @staticmethod
-    def _path_selector(path, _id):
+    def _path_selector(path, _id, extra_data):
         # Only one path available
         if type(path) is str:
             return path
@@ -79,7 +85,7 @@ class Request:
         # `path` can be a list of up to 2 paths: to get all resources and to get a specific one.
         # e.g. 'GET /workers' returns all workers and 'GET /workers/123' returns worker with ID=123
         get_url, get_by_id_url = path
-        return get_url if not _id else get_by_id_url
+        return get_url if not _id and not extra_data else get_by_id_url
 
     @staticmethod
     def _url_id_setter(url, obj_id):
@@ -102,7 +108,7 @@ class Request:
 
         # Special case for 'shortId'
         elif key == 'shortId':
-            url = re.sub(r':shortId', f'{key}/{value}', url)
+            url = re.sub(r':[a-z]*Id', f'{key}/{value}', url)
 
         return url
 
