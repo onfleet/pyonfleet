@@ -1,33 +1,77 @@
-import requests
 import json
-import sys
 import os
-from requests.auth import HTTPBasicAuth
+
+import requests
+
+from onfleet.config import API_BASE_URL
 from onfleet.endpoint import Endpoint
-from onfleet.error import ValidationError
-from onfleet.config import Config
+from onfleet.request import Request
+
 
 class Onfleet(object):
-    # Loading config data
-    data = Config.data
-    # Look up local authentication JSON if no api_key was passed
-    if (os.path.isfile(".auth.json")):
-        with open(".auth.json") as json_secret_file:
-            secret = json.load(json_secret_file)
+    '''
+    Onfleet API wrapper.
+    '''
+    _session = requests.Session()
+
+    # Available endpoints.
+    # Note that all paths must have '/' only at the beginning, not at the end.
+
+    admins = Endpoint('admins', ('GET', 'POST', 'PUT', 'DELETE'), _session)
+
+    administrators = Endpoint('admins', ('GET', 'POST', 'PUT', 'DELETE'), _session)
+    administrators.matchMetadata = Request('POST', '/admins/metadata', _session)
+
+    containers = Endpoint('containers', ('PUT',), _session)
+    containers.get = Request('GET', '/containers/:entityType/:entityId', _session)
+
+    destinations = Endpoint('destinations', ('POST'), _session)
+    destinations.get = Request('GET', '/destinations/:destinationId', _session)
+    destinations.matchMetadata = Request('POST', '/destinations/metadata', _session)
+
+    hubs = Endpoint('hubs', ('GET', 'POST', 'PUT'), _session)
+
+    organization = Endpoint('organization', (), _session)
+    organization.get = Request('GET', ['/organization', '/organizations/:orgId'], _session)
+    organization.insertTask = Request('PUT', '/containers/organization/:taskId', _session)
+
+    recipients = Endpoint('recipients', ('POST', 'PUT'), _session)
+    recipients.get = Request('GET', '/recipients/:recipientId', _session)
+    recipients.matchMetadata = Request('POST', '/recipients/metadata', _session)
+
+    tasks = Endpoint('tasks', ('POST', 'PUT', 'DELETE'), _session)
+    tasks.get = Request('GET', ['/tasks/all', '/tasks/:taskId'], _session)
+    tasks.clone = Request('POST', '/tasks/:taskId/clone', _session)
+    tasks.forceComplete = Request('POST', '/tasks/:taskId/complete', _session)
+    tasks.batchCreate = Request('POST', '/tasks/batch', _session)
+    tasks.autoAssign = Request('POST', '/tasks/autoAssign', _session)
+    tasks.matchMetadata = Request('POST', '/tasks/metadata', _session)
+
+    teams = Endpoint('teams', ('POST', 'PUT', 'DELETE'), _session)
+    teams.get = Request('GET', ['/teams', '/teams/:orgId'], _session)
+    teams.getWorkerEta = Request('GET', '/teams/:teamId/estimate', _session)
+    teams.autoDispatch = Request('POST', '/teams/:teamId/dispatch', _session)
+    teams.insertTask = Request('PUT', '/containers/teams/:taskId', _session)
+
+    workers = Endpoint('workers', ('POST', 'PUT', 'DELETE'), _session)
+    workers.get = Request('GET', ['/workers', '/workers/:workerId'], _session)
+    workers.getSchedule = Request('GET', '/workers/:workerId/schedule', _session)
+    workers.getByLocation = Request('GET', '/workers/location', _session)
+    workers.setSchedule = Request('POST', '/workers/:workerId/schedule', _session)
+    workers.matchMetadata = Request('POST', '/workers/metadata', _session)
+    workers.insertTask = Request('PUT', '/containers/workers/:taskId', _session)
+
+    webhooks = Endpoint('webhooks', ('GET', 'POST', 'DELETE'), _session)
 
     def __init__(self, api_key=None):
-        self._session = requests.Session()
-        # auth takes api_key and api_secret
-        self._session.auth = (api_key if api_key else self.secret["API_KEY"], "")
-        self._initialize_resources(self._session)
+        # Looking up local authentication JSON if no api_key was passed
+        if not api_key:
+            if os.path.isfile(".auth.json"):
+                with open(".auth.json") as json_secret_file:
+                    local_secret = json.load(json_secret_file)
+                    api_key = local_secret.get('API_KEY')
+        self._session.auth = (api_key, '')  # Username, password
 
     def auth_test(self):
-        path = self.data["URL"]["base_url"] + self.data["URL"]["version"] + self.data["URL"]["auth_test"]
-        response = self._session.get(path)
+        response = self._session.get(f'{API_BASE_URL}/auth/test')
         return response.json()
-
-    def _initialize_resources(self, session):
-        resources = self.data["RESOURCES"]
-        # Go through the config module to create endpoints
-        for endpoint, http_methods in resources.items():
-            setattr(self, endpoint, Endpoint(http_methods, session))

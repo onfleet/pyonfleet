@@ -60,11 +60,11 @@ También tenemos la opción de no crear dicho archivo y, en cambio, proporcionar
 ```python
 from onfleet import Onfleet
 
-# Opción 1 - Recomendada
-onfleet_api = Onfleet()  # Utilizando el archivo .auth.json
+# Option 1 - Recommended
+onfleet_api = Onfleet()  # Using the .auth.json file
 
-# Opción 2
-onfleet_api = Onfleet(api_key="<your_api_key>")  # Sin el archivo .auth.json
+# Option 2
+onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
@@ -80,16 +80,16 @@ Estas son las operaciones disponibles para cada endpoint:
 
 | Entity | GET | POST | PUT | DELETE |
 | :-: | :-: | :-: | :-: | :-: |
-| [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
-| [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id), get(teams=id), get(organizations=id) | x | update(id, body) | x |
-| [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body), matchMetadata(body) | x | x |
-| [Hubs](https://docs.onfleet.com/reference#hubs) | get() | create(body) | update(id, body) | x |
-| [Organization](https://docs.onfleet.com/reference#organizations) | get(), get(id) | x | insertTask(id, body) | x |
-| [Recipients](https://docs.onfleet.com/reference#recipients) | get(id), get(name), get(phone) | create(body), matchMetadata(body) | update(id, body) | x |
-| [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams), get(id), get(shortId) | create(body), clone(id), forceComplete(id), batch(body), autoAssign(body), matchMetadata(body) | update(id, body) | deleteOne(id) |
-| [Teams](https://docs.onfleet.com/reference#teams) | get(), get(id), getWorkerEta(id, queryParams) | create(body), autoDispatch(id, body) | update(id, body), insertTask(id, body) | deleteOne(id) |
-| [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body) | x | deleteOne(id) |
-| [Workers](https://docs.onfleet.com/reference#workers) | get(), get(queryParams), get(id), getByLocation(queryParams), getSchedule(id) | create(body), setSchedule(id, body), matchMetadata(body) | update(id, body), insertTask(id, body) | deleteOne(id) |
+| [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
+| [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id)<br />get(teams=id)<br />get(organizations=id) | x | update(id, body={}) | x |
+| [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body={})<br />matchMetadata(body={}) | x | x |
+| [Hubs](https://docs.onfleet.com/reference#hubs) | get() | create(body={}) | update(id, body={}) | x |
+| [Organization](https://docs.onfleet.com/reference#organizations) | get()<br />get(id) | x | insertTask(id, body={}) | x |
+| [Recipients](https://docs.onfleet.com/reference#recipients) | get(id)<br />get(name='')<br />get(phone='') | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | x |
+| [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams={})<br />get(id)<br />get(shortId=id) | create(body={})<br />clone(id)<br />forceComplete(id)<br />batch(body={})<br />autoAssign(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
+| [Teams](https://docs.onfleet.com/reference#teams) | get()<br />get(id)<br />getWorkerEta(id, queryParams={}) | create(body={})<br />autoDispatch(id, body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
+| [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body={}) | x | deleteOne(id) |
+| [Workers](https://docs.onfleet.com/reference#workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
 
 #### Peticiones GET
 Para obtener todos los elementos disponibles en un recurso:
@@ -106,11 +106,11 @@ onfleet_api.workers.get(queryParams="")
 Opcionalmente, podemos utilizar `queryParams` en los recursos que lo soportan.  
 En la [documentación de la API](https://docs.onfleet.com/) se describe qué recursos lo permiten.
 ```python
-# Opción 1
-onfleet_api.workers.get(queryParams="phones=<phone_number>")
-
-# Opción 2
+# Option 1
 onfleet_api.workers.get(queryParams={"phones": "<phone_number>"})
+
+# Option 2
+onfleet_api.workers.get(queryParams="phones=<phone_number>")
 ```
 
 Para obtener un elemento dentro de un recurso, éste se puede localizar mediante un parámetro específico:

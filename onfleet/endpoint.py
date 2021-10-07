@@ -1,18 +1,30 @@
 from onfleet.request import Request
 
+
 class Endpoint:
-    def __init__(self, HttpMethods, Session):
-        self.HttpMethods = HttpMethods
-        self.Session = Session
+    '''
+    Onfleet API endpoint.
+    '''
 
-        for httpMethod, methodDict in self.HttpMethods.items():
-            self._generate_request(httpMethod, methodDict)
+    def __init__(self, name, basic_methods, session):
+        self.name = name
+        self.session = session
+        self._add_basic_methods(basic_methods)
 
-    def _generate_request(self, httpMethod, methodDict):
-        if (httpMethod):
-            http_method = httpMethod
-        else:
-            raise Exception("Method does not exist")
-        # For each method, create the corresponding HTTP request
-        for methodName, uri in methodDict.items():
-            setattr(self, methodName, Request(http_method, uri, self.Session))    
+    def _add_basic_methods(self, basic_methods):
+        if not basic_methods:
+            return
+
+        uri = f'/{self.name}'  # e.g. '/admins'
+
+        if 'GET' in basic_methods:
+            self.get = Request('GET', uri, self.session)
+        if 'POST' in basic_methods:
+            self.create = Request('POST', uri, self.session)
+
+        uri = f'{uri}/:{self.name[:-1]}Id'  # e.g. '/admins' --> '/admins/:adminId'
+
+        if 'PUT' in basic_methods:
+            self.update = Request('PUT', uri, self.session)
+        if 'DELETE' in basic_methods:
+            self.deleteOne = Request('DELETE', uri, self.session)
