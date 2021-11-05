@@ -115,7 +115,16 @@ class Request:
 
     @staticmethod
     def _clean_params(raw_params):
+        # For string, we split comma since the input query parameters are separated by comma
         if type(raw_params) is str:
-            # 'phones=<phone_number>' --> {'phones': '<phone_number>'}
-            key, value = raw_params.split('=')
-            return {key: f'{value}'}
+            params_array = raw_params.split(',')
+            params_dict = {}
+            # For multiple query parameters, we split by = and set the dictionary
+            for param in params_array:
+                key, value = param.split('=')
+                params_dict[key] = value
+            return params_dict
+
+        # For dictionaries, we pass through directly
+        elif type(raw_params) is dict:
+            return raw_params
