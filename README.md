@@ -18,6 +18,7 @@ If you have any questions, please reach us by submitting an issue [here](https:/
 * [Synopsis](#synopsis)
 * [Installation](#installation)
 * [Usage](#usage)
+    - [Unit testing using Docker](#unit-testing-using-docker)
     - [Throttling](#throttling)
     - [Responses](#responses)
     - [Supported CRUD operations](#supported-crud-operations)
@@ -67,6 +68,10 @@ onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
 Once the `Onfleet` object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/).
+
+### Unit testing using Docker
+
+`docker-compose up --build`
 
 ### Throttling
 Rate limiting is enforced by the API with a threshold of 20 requests per second across all your organization's API keys. Learn more about it [here](https://docs.onfleet.com/reference#throttling).
