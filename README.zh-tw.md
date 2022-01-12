@@ -17,6 +17,7 @@
 * [概要](#概要)
 * [安裝](#安裝)
 * [使用守則](#使用守則)
+    - [使用Docker進行單元測試](#使用Docker進行單元測試)
     - [API速限](#API速限)
     - [請求回應](#請求回應)
     - [支援的CRUD操作](#支援的CRUD操作)
@@ -64,6 +65,10 @@ onfleet_api = Onfleet()  # Using the .auth.json file
 # Option 2
 onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
+
+### 使用Docker進行單元測試
+
+`docker-compose up --build`
 
 ### API速限
 原則上API的速限為每秒鐘20次請求，詳情請參考[官方文件](https://docs.onfleet.com/reference#throttling)。
