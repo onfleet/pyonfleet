@@ -18,6 +18,7 @@ En caso de preguntas, pueden contactarnos a través de un issue [aquí](https://
 * [Sinopsis](#sinopsis)
 * [Instalación](#instalación)
 * [Uso](#uso)
+    - [Pruebas unitarias](#pruebas-unitarias)
     - [Límites](#límites)
     - [Respuestas](#respuestas)
     - [Operaciones CRUD soportadas](#operaciones-crud-soportadas)
@@ -68,6 +69,10 @@ onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
 Una vez que el objeto `Onfleet` object es creado, obtendremos acceso a todos los recursos de la API referenciados en la [documentación de la API de Onfleet](https://docs.onfleet.com/).
+
+### Pruebas unitarias usando Docker
+
+`docker-compose up --build`
 
 ### Límites
 La API impone un límite de 20 peticiones por segundo entre todas las peticiones de todas las llaves de la organización. Más detalles [aquí](https://docs.onfleet.com/reference#throttling).
