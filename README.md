@@ -91,9 +91,9 @@ Here are the operations available for each entity:
 | [Organization](https://docs.onfleet.com/reference#organizations) | get()<br />get(id) | x | insertTask(id, body={}) | x |
 | [Recipients](https://docs.onfleet.com/reference#recipients) | get(id)<br />get(name='')<br />get(phone='') | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | x |
 | [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams={})<br />get(id)<br />get(shortId=id) | create(body={})<br />clone(id)<br />forceComplete(id)<br />batch(body={})<br />autoAssign(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
-| [Teams](https://docs.onfleet.com/reference#teams) | get()<br />get(id)<br />getWorkerEta(id, queryParams={}) | create(body={})<br />autoDispatch(id, body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
+| [Teams](https://docs.onfleet.com/reference#teams) | get()<br />get(id)<br />getWorkerEta(id, queryParams={})<br />getTasks(id, queryParams={}) | create(body={})<br />autoDispatch(id, body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
 | [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body={}) | x | deleteOne(id) |
-| [Workers](https://docs.onfleet.com/reference#workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
+| [Workers](https://docs.onfleet.com/reference#workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id)<br />getTasks(id, queryParams={}) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
 
 #### GET Requests
 To get all the documents within an endpoint:

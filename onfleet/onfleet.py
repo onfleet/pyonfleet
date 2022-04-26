@@ -50,6 +50,7 @@ class Onfleet(object):
     teams = Endpoint('teams', ('POST', 'PUT', 'DELETE'), _session)
     teams.get = Request('GET', ['/teams', '/teams/:orgId'], _session)
     teams.getWorkerEta = Request('GET', '/teams/:teamId/estimate', _session)
+    teams.getTasks = Request('GET', '/teams/:teamId/tasks', _session)
     teams.autoDispatch = Request('POST', '/teams/:teamId/dispatch', _session)
     teams.insertTask = Request('PUT', '/containers/teams/:taskId', _session)
 
@@ -57,6 +58,7 @@ class Onfleet(object):
     workers.get = Request('GET', ['/workers', '/workers/:workerId'], _session)
     workers.getSchedule = Request('GET', '/workers/:workerId/schedule', _session)
     workers.getByLocation = Request('GET', '/workers/location', _session)
+    workers.getTasks = Request('GET', '/workers/:workerId/tasks', _session)
     workers.setSchedule = Request('POST', '/workers/:workerId/schedule', _session)
     workers.matchMetadata = Request('POST', '/workers/metadata', _session)
     workers.insertTask = Request('PUT', '/containers/workers/:taskId', _session)
