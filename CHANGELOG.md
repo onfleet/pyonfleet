@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2022-04-26
+### Added
+- Get all tasks in team
+- Get all worker assigned tasks
+
 ## [1.2.1] - 2021-11-04
 ### Fixed
 - Query parameter bug fix
@@ -76,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release on PyPI
 
 [Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.2...HEAD
+[1.3.0]: https://github.com/onfleet/pyonfleet/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/onfleet/pyonfleet/compare/v1.2...v1.2.1
 [1.2]: https://github.com/onfleet/pyonfleet/compare/v1.1.6...v1.2
 [1.1.6]: https://github.com/onfleet/pyonfleet/compare/v1.1.5...v1.1.6
