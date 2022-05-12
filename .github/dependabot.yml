@@ -1,10 +1,10 @@
 version: 2
 updates:
-  # Maintain dependencies for npm
+  # Maintain dependencies for pip
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "monthly"
     commit-message:
-      # Prefix all commit messages with "npm"
+      # Prefix all commit messages with "pip"
       prefix: "[pip]"
