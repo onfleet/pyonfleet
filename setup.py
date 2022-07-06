@@ -19,7 +19,7 @@ README = (PROJECT_ROOT / 'README.md').read_text()
 setuptools.setup(
     name='pyonfleet',
     version=VERSION,
-    author='James Li',
+    author='James Li',  # `setuptools` does not support using `author` as a list, nor 'contributors'
     author_email='support@onfleet.com',
     description="Onfleet's Python API Wrapper Package",
     long_description=README,

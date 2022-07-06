@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2022-07-06
+### Security
+- Update dependencies (`backoff` v2.1.2, `requests` v2.28.1)
+
 ## [1.3.0] - 2022-04-26
 ### Added
 - Get all tasks in team
@@ -80,7 +84,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release on PyPI
 
-[Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.2...HEAD
+[Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/onfleet/pyonfleet/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/onfleet/pyonfleet/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/onfleet/pyonfleet/compare/v1.2...v1.2.1
 [1.2]: https://github.com/onfleet/pyonfleet/compare/v1.1.6...v1.2
