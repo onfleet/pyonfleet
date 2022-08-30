@@ -85,16 +85,16 @@ Estas son las operaciones disponibles para cada endpoint:
 
 | Entity | GET | POST | PUT | DELETE |
 | :-: | :-: | :-: | :-: | :-: |
-| [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
-| [Containers](https://docs.onfleet.com/reference#containers) | get(workers=id)<br />get(teams=id)<br />get(organizations=id) | x | update(id, body={}) | x |
-| [Destinations](https://docs.onfleet.com/reference#destinations) | get(id) | create(body={})<br />matchMetadata(body={}) | x | x |
-| [Hubs](https://docs.onfleet.com/reference#hubs) | get() | create(body={}) | update(id, body={}) | x |
-| [Organization](https://docs.onfleet.com/reference#organizations) | get()<br />get(id) | x | insertTask(id, body={}) | x |
-| [Recipients](https://docs.onfleet.com/reference#recipients) | get(id)<br />get(name='')<br />get(phone='') | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | x |
-| [Tasks](https://docs.onfleet.com/reference#tasks) | get(queryParams={})<br />get(id)<br />get(shortId=id) | create(body={})<br />clone(id)<br />forceComplete(id)<br />batch(body={})<br />autoAssign(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
-| [Teams](https://docs.onfleet.com/reference#teams) | get()<br />get(id)<br />getWorkerEta(id, queryParams={})<br />getTasks(id, queryParams={}) | create(body={})<br />autoDispatch(id, body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
-| [Webhooks](https://docs.onfleet.com/reference#webhooks) | get() | create(body={}) | x | deleteOne(id) |
-| [Workers](https://docs.onfleet.com/reference#workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id)<br />getTasks(id, queryParams={}) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
+| [Admins/Administrators](https://docs.onfleet.com/reference/administrators) | get() | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
+| [Containers](https://docs.onfleet.com/reference/containers) | get(workers=id)<br />get(teams=id)<br />get(organizations=id) | x | update(id, body={}) | x |
+| [Destinations](https://docs.onfleet.com/reference/destinations) | get(id) | create(body={})<br />matchMetadata(body={}) | x | x |
+| [Hubs](https://docs.onfleet.com/reference/hubs) | get() | create(body={}) | update(id, body={}) | x |
+| [Organization](https://docs.onfleet.com/reference/organizations) | get()<br />get(id) | x | insertTask(id, body={}) | x |
+| [Recipients](https://docs.onfleet.com/reference/recipients) | get(id)<br />get(name='')<br />get(phone='') | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | x |
+| [Tasks](https://docs.onfleet.com/reference/tasks) | get(queryParams={})<br />get(id)<br />get(shortId=id) | create(body={})<br />clone(id)<br />forceComplete(id)<br />batch(body={})<br />autoAssign(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
+| [Teams](https://docs.onfleet.com/reference/teams) | get()<br />get(id)<br />getWorkerEta(id, queryParams={})<br />getTasks(id, queryParams={}) | create(body={})<br />autoDispatch(id, body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
+| [Webhooks](https://docs.onfleet.com/reference/webhooks) | get() | create(body={}) | x | deleteOne(id) |
+| [Workers](https://docs.onfleet.com/reference/workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id)<br />getTasks(id, queryParams={}) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
 
 #### Peticiones GET
 Para obtener todos los elementos disponibles en un recurso:
