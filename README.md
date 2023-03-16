@@ -137,6 +137,8 @@ onfleet_api.containers.get(teams="<team_ID>")
 onfleet_api.containers.get(organizations="<organization_ID>")
 ```
 
+**Note:** don't use Python-style `True` and `False` for boolean values - supply these as strings like `"true"` or `"false"`.
+
 To get a driver by location, use the `getByLocation` function:
 ```python
 getByLocation(queryParams="<location_params>")
