@@ -67,6 +67,12 @@ onfleet_api = Onfleet()  # Using the .auth.json file
 onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 ```
 
+Another optional parameter for `Onfleet` is `custom_headers` where you can pass in headers to be applied to all requests. For example:
+
+```python
+onfleet_api = Onfleet(custom_headers={"<header_name>": "<header_value>"})
+```
+
 Once the `Onfleet` object is created, you will get access to all the API endpoints as documented in the [Onfleet API documentation](https://docs.onfleet.com/).
 
 ### Unit testing using Docker

@@ -65,7 +65,7 @@ class Onfleet(object):
 
     webhooks = Endpoint('webhooks', ('GET', 'POST', 'DELETE'), _session)
 
-    def __init__(self, api_key=None):
+    def __init__(self, api_key=None, custom_headers={}):
         # Looking up local authentication JSON if no api_key was passed
         if not api_key:
             if os.path.isfile(".auth.json"):
@@ -73,6 +73,9 @@ class Onfleet(object):
                     local_secret = json.load(json_secret_file)
                     api_key = local_secret.get('API_KEY')
         self._session.auth = (api_key, '')  # Username, password
+        # Apply custom headers to all requests if given
+        if bool(custom_headers):
+            self._session.headers.update(custom_headers)
 
     def auth_test(self):
         response = self._session.get(f'{API_BASE_URL}/auth/test')
