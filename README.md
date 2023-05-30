@@ -90,7 +90,7 @@ Here are the operations available for each entity:
 
 | Entity | GET | POST | PUT | DELETE |
 | :-: | :-: | :-: | :-: | :-: |
-| [Admins/Administrators](https://docs.onfleet.com/reference#administrators) | get() | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
+| [Admins/Administrators](https://docs.onfleet.com/reference/administrators) | get() | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
 | [Containers](https://docs.onfleet.com/reference/containers) | get(workers=id)<br />get(teams=id)<br />get(organizations=id) | x | update(id, body={}) | x |
 | [Destinations](https://docs.onfleet.com/reference/destinations) | get(id) | create(body={})<br />matchMetadata(body={}) | x | x |
 | [Hubs](https://docs.onfleet.com/reference/hubs) | get() | create(body={}) | update(id, body={}) | x |
