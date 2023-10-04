@@ -27,10 +27,7 @@ class Request:
 
     @on_exception(expo, RateLimitError, max_tries=8)
     @limits(calls=RATE_LIMIT, period=1)
-    def __call__(self, id=None, body=None, queryParams=None, **extra_data):
-        obj_id = id
-        query_params = queryParams
-
+    def __call__(self, obj_id=None, body=None, query_params=None, **extra_data):
         selected_path = self._path_selector(self.path, obj_id, extra_data)
         url = f'{API_BASE_URL}{selected_path}'
 
