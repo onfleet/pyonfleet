@@ -90,7 +90,7 @@ onfleet_api = Onfleet(api_key="<your_api_key>")  # Without the .auth.json file
 | [Tasks](https://docs.onfleet.com/reference/tasks) | get(queryParams={})<br />get(id)<br />get(shortId=id) | create(body={})<br />clone(id)<br />forceComplete(id)<br />batch(body={})<br />autoAssign(body={})<br />matchMetadata(body={}) | update(id, body={}) | deleteOne(id) |
 | [Teams](https://docs.onfleet.com/reference/teams) | get()<br />get(id)<br />getWorkerEta(id, queryParams={})<br />getTasks(id, queryParams={}) | create(body={})<br />autoDispatch(id, body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
 | [Webhooks](https://docs.onfleet.com/reference/webhooks) | get() | create(body={}) | x | deleteOne(id) |
-| [Workers](https://docs.onfleet.com/reference/workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id)<br />getTasks(id, queryParams={}) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
+| [Workers](https://docs.onfleet.com/reference/workers) | get()<br />get(id)<br />get(queryParams={})<br />getByLocation(queryParams={})<br />getSchedule(id)<br />getTasks(id, queryParams={}) | create(body={})<br />setSchedule(id, body={})<br />matchMetadata(body={})<br />getDeliveryManifest(workerId, hubId, googleApiKey, queryParams={}) | update(id, body={})<br />insertTask(id, body={}) | deleteOne(id) |
 
 #### GET 請求
 展示所有資源的指令如下：
@@ -164,13 +164,14 @@ onfleet_api.tasks.batchCreate(body="<data>")
 onfleet_api.tasks.autoAssign(body="<data>")
 
 onfleet_api.workers.setSchedule(id="<24_digit_ID>", body="<data>")
+onfleet.api.workers.getDeliveryManifest(workerId="<workerId>", hubId="<hubId>", googleApiKey="<googleApiKey>", queryParams={"<startDate>", "<endDate>"})
 
 onfleet_api.teams.autoDispatch(id="<24_digit_ID>", body="<data>")
 
 onfleet_api.<entity_name_pluralized>.matchMetadata(body="<data>")
 ```
 
-參考資料：[`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata), 以及[`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch)。
+參考資料：[`clone`](https://docs.onfleet.com/reference#clone-task), [`forceComplete`](https://docs.onfleet.com/reference#complete-task), [`batchCreate`](https://docs.onfleet.com/reference#create-tasks-in-batch), [`autoAssign`](https://docs.onfleet.com/reference#automatically-assign-list-of-tasks), [`setSchedule`](https://docs.onfleet.com/reference#set-workers-schedule), [`matchMetadata`](https://docs.onfleet.com/reference#querying-by-metadata), [`getDeliveryManifest`](https://docs.onfleet.com/reference/delivery-manifest) 以及[`autoDispatch`](https://docs.onfleet.com/reference#team-auto-dispatch)。
 
 #### PUT 請求
 取代（更新）某單一指定資源的指令如下:
