@@ -40,7 +40,7 @@ class Request:
             url = self._url_extra_data_setter(url, extra_data)
         if workerId and hubId:
             body = {
-                'path': f'providers/manifest/generate?hubId={workerId}&workerId={hubId}',
+                'path': f'providers/manifest/generate?hubId={hubId}&workerId={workerId}',
                 'method': 'GET'
             }
         if googleApiKey:
