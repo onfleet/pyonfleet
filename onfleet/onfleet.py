@@ -62,6 +62,7 @@ class Onfleet(object):
     workers.setSchedule = Request('POST', '/workers/:workerId/schedule', _session)
     workers.matchMetadata = Request('POST', '/workers/metadata', _session)
     workers.insertTask = Request('PUT', '/containers/workers/:taskId', _session)
+    workers.getDeliveryManifest = Request('POST', '/integrations/marketplace', _session)
 
     webhooks = Endpoint('webhooks', ('GET', 'POST', 'DELETE'), _session)
 
