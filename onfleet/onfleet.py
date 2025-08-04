@@ -39,9 +39,9 @@ class Onfleet(object):
     recipients.get = Request('GET', '/recipients/:recipientId', _session)
     recipients.matchMetadata = Request('POST', '/recipients/metadata', _session)
 
-    routeplan = Endpoint('routePlans',('POST','PUT','DELETE'), _session)
-    routeplan.get = Request('GET',['/routePlans','/routePlans/:routePlanId'], _session)
-    routeplan.addTasksToRoutePlan = Request('PUT','/routePlans/:routePlanId/tasks', _session)
+    routeplans = Endpoint('routePlans',('POST','PUT','DELETE'), _session)
+    routeplans.get = Request('GET',['/routePlans','/routePlans/:routePlanId'], _session)
+    routeplans.addTasksToRoutePlan = Request('PUT','/routePlans/:routePlanId/tasks', _session)
 
     tasks = Endpoint('tasks', ('POST', 'PUT', 'DELETE'), _session)
     tasks.get = Request('GET', ['/tasks/all', '/tasks/:taskId'], _session)
