@@ -99,7 +99,7 @@ class Request:
     def _url_id_setter(url, obj_id):
         # TODO(julian): Check validity of IDs
         # e.g. '/admins/:adminId', 123 --> '/admins/123'
-        return re.sub(r':[a-z]*Id', obj_id, url)
+        return re.sub(r':[a-zA-Z]*Id', obj_id, url)
 
     @staticmethod
     def _url_extra_data_setter(url, extra_data):
