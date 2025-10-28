@@ -65,8 +65,8 @@ class Request:
             raise HttpError(error.get('message', 'Error'), response.status_code)
 
         error_message = error['message']['message']
-        error_code = error['message']['error']
-        error_request = error['message']['request']
+        error_code = error['message'].get('error', 0)
+        error_request = error['message'].get('request')
         error_cause = error['message'].get('cause')
         exception_args = (error_message, error_code, error_request, error_cause)
 
