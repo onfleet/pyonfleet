@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2025-10-27
+### Added
+- Added Batch Create Async endpoint
+- Added Get Batch Create Async status endpoint
+
 ## [1.5.0] - 2025-08-22
 ### Added
 - Added Route Plans endpoint support
@@ -96,7 +101,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release on PyPI
 
-[Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/onfleet/pyonfleet/compare/v1.6.0...HEAD
+[1.5.0]: https://github.com/onfleet/pyonfleet/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/onfleet/pyonfleet/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/onfleet/pyonfleet/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/onfleet/pyonfleet/compare/v1.3.1...v1.4.0
