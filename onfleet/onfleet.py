@@ -48,6 +48,8 @@ class Onfleet(object):
     tasks.clone = Request('POST', '/tasks/:taskId/clone', _session)
     tasks.forceComplete = Request('POST', '/tasks/:taskId/complete', _session)
     tasks.batchCreate = Request('POST', '/tasks/batch', _session)
+    tasks.batchCreateAsync = Request('POST', '/tasks/batch-async', _session)
+    tasks.getBatchCreateAsyncStatus = Request('GET', '/tasks/batch/:batchId',_session)
     tasks.autoAssign = Request('POST', '/tasks/autoAssign', _session)
     tasks.matchMetadata = Request('POST', '/tasks/metadata', _session)
 
