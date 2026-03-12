@@ -59,6 +59,7 @@ class Onfleet(object):
     teams.getTasks = Request('GET', '/teams/:teamId/tasks', _session)
     teams.autoDispatch = Request('POST', '/teams/:teamId/dispatch', _session)
     teams.insertTask = Request('PUT', '/containers/teams/:taskId', _session)
+    teams.matchMetadata = Request('POST', '/teams/metadata', _session)
 
     workers = Endpoint('workers', ('POST', 'PUT', 'DELETE'), _session)
     workers.get = Request('GET', ['/workers', '/workers/:workerId'], _session)
