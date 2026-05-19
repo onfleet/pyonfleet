@@ -35,6 +35,13 @@ class Onfleet(object):
     organization.get = Request('GET', ['/organization', '/organizations/:orgId'], _session)
     organization.insertTask = Request('PUT', '/containers/organization/:taskId', _session)
 
+    orders = Endpoint('taskOrders', ('POST', 'PUT'), _session)
+    orders.get = Request('GET', '/taskOrders/:orderShortId', _session)
+    orders.cancel = Request('POST', '/taskOrders/cancel', _session)
+    orders.clone = Request('POST', '/taskOrders/:orderId/clone', _session)
+    orders.reject = Request('POST', '/taskOrders/:orderShortId/reject', _session)
+    orders.quote = Request('GET', '/deliveryServices/quote', _session)
+
     recipients = Endpoint('recipients', ('POST', 'PUT'), _session)
     recipients.get = Request('GET', '/recipients/:recipientId', _session)
     recipients.matchMetadata = Request('POST', '/recipients/metadata', _session)

@@ -89,6 +89,7 @@ Estas son las operaciones disponibles para cada endpoint:
 | [Containers](https://docs.onfleet.com/reference/containers) | get(workers=id)<br />get(teams=id)<br />get(organizations=id) | x | update(id, body={}) | x |
 | [Destinations](https://docs.onfleet.com/reference/destinations) | get(id) | create(body={})<br />matchMetadata(body={}) | x | x |
 | [Hubs](https://docs.onfleet.com/reference/hubs) | get() | create(body={}) | update(id, body={}) | x |
+| [Orders](https://docs.onfleet.com/reference/orders) | get(id)<br />quote(queryParams={}) | create(body={})<br />cancel(body={})<br />clone(id)<br />reject(id) | update(id, body={}) | x |
 | [Organization](https://docs.onfleet.com/reference/organizations) | get()<br />get(id) | x | insertTask(id, body={}) | x |
 | [Recipients](https://docs.onfleet.com/reference/recipients) | get(id)<br />get(name='')<br />get(phone='') | create(body={})<br />matchMetadata(body={}) | update(id, body={}) | x |
 | [Route Plans](https://docs.onfleet.com/update/reference/routeplan#/) | get(id)<br />get(queryParams="") | create(body={}) | update(id, body={})<br />addTasksToRoutePlan(id, body={}) | deleteOne(id) |
