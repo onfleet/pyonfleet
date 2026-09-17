@@ -2,6 +2,7 @@ import sys
 sys.path.append("../onfleet")
 import onfleet
 
+import os
 import unittest
 import re
 from datetime import datetime, timedelta
@@ -11,8 +12,12 @@ from datetime import datetime, timedelta
 class TestOnfleet(unittest.TestCase):
 
     def setUp(self):
-        # Input your API key to enable test
-        self.api_key = "***REMOVED-ONFLEET-API-KEY***"
+        # Set the ONFLEET_API_KEY environment variable to enable this test.
+        # Use a key from a dedicated test organization: the suite performs
+        # real writes (creates and deletes admins, workers, hubs, teams).
+        self.api_key = os.environ.get("ONFLEET_API_KEY")
+        if (not self.api_key):
+            self.skipTest("ONFLEET_API_KEY environment variable is not set")
         self.api = onfleet.Onfleet(api_key=self.api_key)
 
     def test_authenticate(self):
