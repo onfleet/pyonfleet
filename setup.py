@@ -1,5 +1,6 @@
 import ast
 import pathlib
+
 import setuptools
 
 PROJECT_ROOT = pathlib.Path(__file__).parent
