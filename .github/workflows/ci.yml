@@ -19,9 +19,12 @@ on:
 permissions:
   contents: read
 
+# Cancel superseded runs on PR churn only. Push runs to master include
+# the live-API suite, which mutates real data; a mid-test cancellation
+# would leave test resources behind.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   lint:
@@ -46,7 +49,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install pip-audit
-        run: pip install pip-audit
+        run: pip install pip-audit==2.10.1
       # pip-audit has no severity filter; it fails on any known
       # vulnerability, which is stricter than the "high severity" gate
       # the ticket asks for.
@@ -64,7 +67,9 @@ jobs:
       # the CLI performs the same full-history scan without one.
       - name: Run gitleaks (full history)
         run: |
-          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz | tar -xz gitleaks
+          curl -sSfLO https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz
+          echo "9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c  gitleaks_8.24.3_linux_x64.tar.gz" | sha256sum -c -
+          tar -xzf gitleaks_8.24.3_linux_x64.tar.gz gitleaks
           ./gitleaks git --redact --verbose .
 
   test-offline:
@@ -81,7 +86,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install build
+          pip install build==1.6.1
       - name: Build package
         run: python -m build
       - name: Import smoke test
@@ -105,6 +110,16 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      # Without the secret the suite skips every test and the job would
+      # pass green with zero assertions. Fail loudly instead.
+      - name: Require ONFLEET_API_KEY
+        env:
+          ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
+        run: |
+          if [ -z "$ONFLEET_API_KEY" ]; then
+            echo "::error::ONFLEET_API_KEY secret is not set; the live-API suite cannot run (INT-3877 step 5)."
+            exit 1
+          fi
       - name: Run test suite (live API)
         env:
           ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}

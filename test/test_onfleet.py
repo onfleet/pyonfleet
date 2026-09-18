@@ -47,7 +47,8 @@ class TestOnfleet(unittest.TestCase):
         new_admin_list_length = len(self.api.administrators.get())
         # Length of admin list should increase by 1
         self.assertTrue(old_admin_list_length + 1 == new_admin_list_length)
-        updated_result = self.api.administrators.update(id=new_admin_id, body={"name": "Onfleet Testing - Please delete"})
+        updated_result = self.api.administrators.update(
+            id=new_admin_id, body={"name": "Onfleet Testing - Please delete"})
         # Admin name should be updated
         self.assertTrue(updated_result["name"] == "Onfleet Testing - Please delete")
         deletion_result = self.api.administrators.deleteOne(id=new_admin_id)
@@ -104,12 +105,18 @@ class TestOnfleet(unittest.TestCase):
         search_result = (self.api.recipients.get(search=data))
         # Create the recipient if not exist
         if ("id" not in search_result):
-            new_recipient_data = {"name":"Boris Foster","phone":"+16505551133","notes":"Always orders our GSC special", "skipPhoneNumberValidation":"true"}
+            new_recipient_data = {
+                "name": "Boris Foster",
+                "phone": "+16505551133",
+                "notes": "Always orders our GSC special",
+                "skipPhoneNumberValidation": "true"
+            }
             new_recipient = self.api.recipients.create(body=new_recipient_data)
             recipient_id = new_recipient["id"]
         else:
             recipient_id = search_result["id"]
-        search_result_with_query = self.api.recipients.get(search=data, queryParams={"skipPhoneNumberValidation":"true"})
+        search_result_with_query = self.api.recipients.get(
+            search=data, queryParams={"skipPhoneNumberValidation": "true"})
         self.assertTrue(search_result_with_query["id"] == recipient_id)
 
 
