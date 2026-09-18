@@ -9,17 +9,42 @@ on:
 
 jobs:
 
-# TODO: Run tests
-#   build:
-#     runs-on: ubuntu-latest
+  # Single Python version: the live-API suite mutates real data in the
+  # test organization, so concurrent matrix jobs would race each other.
+  # Per-version coverage runs offline in ci.yml.
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    # Without the secret the suite skips every test and the release gate
+    # would pass green with zero assertions. Fail loudly instead.
+    - name: Require ONFLEET_API_KEY
+      env:
+        ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
+      run: |
+        if [ -z "$ONFLEET_API_KEY" ]; then
+          echo "::error::ONFLEET_API_KEY secret is not set; the live-API suite cannot run (INT-3877 step 5)."
+          exit 1
+        fi
+    - name: Run test suite
+      env:
+        ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
+      run: python -m unittest discover -s test -v
 
   publish:
-    #needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
     - name: Install dependencies
