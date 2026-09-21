@@ -119,6 +119,10 @@ class TestRequestErrorClassification(unittest.TestCase):
         with self.assertRaises(HttpError):
             _request('GET', {'message': {'message': 'Boom', 'error': '1000'}})()
 
+    def test_float_error_code_still_classifies(self):
+        with self.assertRaises(ValidationError):
+            _request('GET', self._error_payload(1000.0))()
+
     def test_missing_top_level_message_raises_http_error(self):
         with self.assertRaises(HttpError):
             _request('GET', {})()

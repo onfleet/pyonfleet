@@ -80,8 +80,9 @@ class Request:
         exception_args = (error_message, error_code, error_request, error_cause)
 
         # A null or non-numeric code cannot be classified; the range
-        # checks below would raise TypeError on it.
-        if not isinstance(error_code, int):
+        # checks below would raise TypeError on it. Floats stay
+        # classifiable: the range checks compare them fine.
+        if not isinstance(error_code, (int, float)):
             raise HttpError(*exception_args)
 
         # https://github.com/addyinc/web/blob/master/yerba/config/errors.json
