@@ -30,7 +30,7 @@ jobs:
         ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
       run: |
         if [ -z "$ONFLEET_API_KEY" ]; then
-          echo "::error::ONFLEET_API_KEY secret is not set; the live-API suite cannot run (INT-3877 step 5)."
+          echo "::error::The live-API suite cannot run without the ONFLEET_API_KEY secret."
           exit 1
         fi
     - name: Run test suite

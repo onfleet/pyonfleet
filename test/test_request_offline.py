@@ -107,10 +107,9 @@ class TestRequestErrorClassification(unittest.TestCase):
             _request('GET', {'message': {}})()
 
     def test_missing_code_keeps_error_details(self):
-        try:
+        with self.assertRaises(HttpError) as context:
             _request('GET', {'message': {'message': 'Boom'}})()
-        except HttpError as caught:
-            self.assertIn('Boom', caught.args)
+        self.assertIn('Boom', context.exception.args)
 
 
 if (__name__ == '__main__'):
