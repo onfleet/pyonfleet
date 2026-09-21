@@ -9,38 +9,17 @@ on:
 
 jobs:
 
-  # Single Python version: the live-API suite mutates real data in the
-  # test organization, so concurrent matrix jobs would race each other.
-  # Per-version coverage runs offline in ci.yml.
+  # Release gate: the shared live-API suite. Unlike ci.yml, this call is
+  # not gated on LIVE_SUITE_ENABLED — a release must never skip tests,
+  # so a missing secret fails the run loudly inside the suite.
   test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-    # Without the secret the suite skips every test and the release gate
-    # would pass green with zero assertions. Fail loudly instead.
-    - name: Require ONFLEET_API_KEY
-      env:
-        ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
-      run: |
-        if [ -z "$ONFLEET_API_KEY" ]; then
-          echo "::error::The live-API suite cannot run without the ONFLEET_API_KEY secret."
-          exit 1
-        fi
-    - name: Run test suite
-      env:
-        ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
-      run: python -m unittest discover -s test -v
+    uses: ./.github/workflows/live-suite.yml
+    secrets: inherit
 
   publish:
     needs: test
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
@@ -62,6 +41,7 @@ jobs:
   notify:
     needs: publish
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: slackapi/slack-github-action@v1.18.0
         with:

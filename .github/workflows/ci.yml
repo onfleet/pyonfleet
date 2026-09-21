@@ -4,17 +4,14 @@
 # exposed to fork PRs, and the suite performs real writes.
 name: CI
 
+# No paths-ignore here: these checks become required via branch
+# protection (INT-3877 step 12), and a required check that never
+# triggers leaves doc-only PRs stuck in the "Expected" state.
 on:
   push:
     branches: [master]
-    paths-ignore:
-      - 'README*'
-      - 'CHANGELOG.md'
   pull_request:
     branches: [master]
-    paths-ignore:
-      - 'README*'
-      - 'CHANGELOG.md'
 
 permissions:
   contents: read
@@ -23,7 +20,7 @@ permissions:
 # the live-API suite, which mutates real data; a mid-test cancellation
 # would leave test resources behind.
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -89,38 +86,23 @@ jobs:
           pip install build==1.6.1
       - name: Build package
         run: python -m build
+      # Install the wheel the build step produced, not the source tree,
+      # so the smoke test exercises the artifact pypi-publish.yml ships.
       - name: Import smoke test
         run: |
-          pip install .
+          pip install dist/*.whl
           python -c "import onfleet; print(onfleet.Onfleet)"
       # Without ONFLEET_API_KEY the live-API tests skip; the API-free
       # unit tests in test_request_offline.py still run and assert.
       - name: Run test suite (offline)
         run: python -m unittest discover -s test -v
 
+  # The job stays disabled until the ONFLEET_API_KEY secret has a value:
+  # set the LIVE_SUITE_ENABLED repository variable to 'true' when the
+  # secret lands. Secrets are not readable in job-level `if` expressions;
+  # variables are. This avoids a red master while the secret is pending.
   test-live:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    if: github.event_name == 'push' && vars.LIVE_SUITE_ENABLED == 'true'
     needs: [lint, test-offline]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      # Without the secret the suite skips every test and the job would
-      # pass green with zero assertions. Fail loudly instead.
-      - name: Require ONFLEET_API_KEY
-        env:
-          ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
-        run: |
-          if [ -z "$ONFLEET_API_KEY" ]; then
-            echo "::error::The live-API suite cannot run without the ONFLEET_API_KEY secret."
-            exit 1
-          fi
-      - name: Run test suite (live API)
-        env:
-          ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
-        run: python -m unittest discover -s test -v
+    uses: ./.github/workflows/live-suite.yml
+    secrets: inherit

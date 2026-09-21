@@ -61,14 +61,22 @@ class Request:
                 time.sleep(1 / rate_remaining)
             return response.status_code if (self.http_method == 'DELETE' or 'complete' in url) else response.json()
 
-        error = json.loads(response.text)
-        if type(error['message']) is not dict:
-            raise HttpError(error.get('message', 'Error'), response.status_code)
+        # The expected error shape is {'message': {...}}. Malformed
+        # payloads (non-JSON body, missing or non-dict 'message') must
+        # still raise the intended exception, not KeyError (issue #30).
+        try:
+            error = json.loads(response.text)
+        except ValueError:
+            error = None
+        error_body = error.get('message') if isinstance(error, dict) else None
 
-        error_message = error['message'].get('message', 'Error')
-        error_code = error['message'].get('error', 0)
-        error_request = error['message'].get('request')
-        error_cause = error['message'].get('cause')
+        if not isinstance(error_body, dict):
+            raise HttpError(error_body or response.text or 'Error', response.status_code)
+
+        error_message = error_body.get('message', 'Error')
+        error_code = error_body.get('error', 0)
+        error_request = error_body.get('request')
+        error_cause = error_body.get('cause')
         exception_args = (error_message, error_code, error_request, error_cause)
 
         # https://github.com/addyinc/web/blob/master/yerba/config/errors.json

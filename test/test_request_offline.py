@@ -111,6 +111,19 @@ class TestRequestErrorClassification(unittest.TestCase):
             _request('GET', {'message': {'message': 'Boom'}})()
         self.assertIn('Boom', context.exception.args)
 
+    def test_missing_top_level_message_raises_http_error(self):
+        with self.assertRaises(HttpError):
+            _request('GET', {})()
+
+    def test_non_json_body_raises_http_error(self):
+        response = _response({})
+        response.text = '<html>502 Bad Gateway</html>'
+        session = Mock()
+        session.request.return_value = response
+        with self.assertRaises(HttpError) as context:
+            Request('GET', '/tasks', session)()
+        self.assertIn('<html>502 Bad Gateway</html>', context.exception.args)
+
 
 if (__name__ == '__main__'):
     unittest.main()
