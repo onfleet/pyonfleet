@@ -99,9 +99,7 @@ jobs:
         run: python -m unittest discover -s test -v
 
   test-live:
-    # TEMP: also run on this same-repo PR to validate the new secret.
-    # Revert before merge.
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [lint, test-offline]
