@@ -7,6 +7,11 @@ on:
   release:
     types: [published]
 
+# The token needs no write access: PyPI uses PYPI_API_TOKEN and Slack
+# uses a webhook secret.
+permissions:
+  contents: read
+
 jobs:
 
   # Release gate: the shared live-API suite. Unlike ci.yml, this call is
@@ -25,11 +30,11 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-version: '3.12'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build
+        pip install build==1.6.1
     - name: Build package
       run: python -m build
     - name: Publish package
@@ -43,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # TODO: bump slack-github-action (v2+ changed the webhook inputs;
+      # the payload and SLACK_WEBHOOK_TYPE need a review with the bump).
       - uses: slackapi/slack-github-action@v1.18.0
         with:
           payload: |

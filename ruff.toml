@@ -9,5 +9,6 @@ line-length = 120
 select = ["E4", "E5", "E7", "E9", "F", "I"]
 
 [lint.per-file-ignores]
-# The test suite mutates sys.path before the onfleet import (import order).
-"test/*" = ["E402", "I001"]
+# Re-export module: the imports exist for `onfleet.<name>` access and
+# are deliberately absent from `__all__`.
+"onfleet/__init__.py" = ["F401"]

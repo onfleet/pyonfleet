@@ -1,10 +1,8 @@
-import sys
-sys.path.append("../onfleet")
-import onfleet
-
 import os
 import unittest
 from datetime import datetime, timedelta
+
+import onfleet
 
 
 # TODO(julian): We need to deprecate this!

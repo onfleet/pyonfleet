@@ -8,3 +8,10 @@ updates:
     commit-message:
       # Prefix all commit messages with "pip"
       prefix: "[pip]"
+  # Keep GitHub Actions refs current (workflow uses: pins)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "[actions]"

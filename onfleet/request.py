@@ -79,6 +79,11 @@ class Request:
         error_cause = error_body.get('cause')
         exception_args = (error_message, error_code, error_request, error_cause)
 
+        # A null or non-numeric code cannot be classified; the range
+        # checks below would raise TypeError on it.
+        if not isinstance(error_code, int):
+            raise HttpError(*exception_args)
+
         # https://github.com/addyinc/web/blob/master/yerba/config/errors.json
 
         if 1000 <= error_code <= 1012:  # InvalidContentError

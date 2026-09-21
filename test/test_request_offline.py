@@ -111,6 +111,14 @@ class TestRequestErrorClassification(unittest.TestCase):
             _request('GET', {'message': {'message': 'Boom'}})()
         self.assertIn('Boom', context.exception.args)
 
+    def test_null_error_code_raises_http_error(self):
+        with self.assertRaises(HttpError):
+            _request('GET', {'message': {'message': 'Boom', 'error': None}})()
+
+    def test_string_error_code_raises_http_error(self):
+        with self.assertRaises(HttpError):
+            _request('GET', {'message': {'message': 'Boom', 'error': '1000'}})()
+
     def test_missing_top_level_message_raises_http_error(self):
         with self.assertRaises(HttpError):
             _request('GET', {})()
