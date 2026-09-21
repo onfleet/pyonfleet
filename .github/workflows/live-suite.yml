@@ -14,6 +14,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Both callers share this group, so a master push and a release
+    # never mutate the test organization at the same time. Never cancel
+    # a running suite: a mid-test cancellation leaves test resources
+    # behind.
+    concurrency:
+      group: live-api-suite
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

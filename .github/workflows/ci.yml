@@ -88,9 +88,12 @@ jobs:
         run: python -m build
       # Install the wheel the build step produced, not the source tree,
       # so the smoke test exercises the artifact pypi-publish.yml ships.
+      # Import from outside the repo root: in the root, the onfleet/
+      # source directory shadows the installed wheel.
       - name: Import smoke test
         run: |
           pip install dist/*.whl
+          cd "$RUNNER_TEMP"
           python -c "import onfleet; print(onfleet.Onfleet)"
       # Without ONFLEET_API_KEY the live-API tests skip; the API-free
       # unit tests in test_request_offline.py still run and assert.
