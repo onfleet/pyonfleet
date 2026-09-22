@@ -1,0 +1,44 @@
+# Reusable live-API test suite, called from ci.yml (push to master)
+# and pypi-publish.yml (release gate). Single Python version: the suite
+# mutates real data in the test organization, so concurrent matrix jobs
+# would race each other. Per-version coverage runs offline in ci.yml.
+name: Live suite
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Both callers share this group, so a master push and a release
+    # never mutate the test organization at the same time. Never cancel
+    # a running suite: a mid-test cancellation leaves test resources
+    # behind.
+    concurrency:
+      group: live-api-suite
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      # Without the secret the suite skips every test and the job would
+      # pass green with zero assertions. Fail loudly instead.
+      - name: Require ONFLEET_API_KEY
+        env:
+          ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
+        run: |
+          if [ -z "$ONFLEET_API_KEY" ]; then
+            echo "::error::The live-API suite cannot run without the ONFLEET_API_KEY secret."
+            exit 1
+          fi
+      - name: Run test suite (live API)
+        env:
+          ONFLEET_API_KEY: ${{ secrets.ONFLEET_API_KEY }}
+        run: python -m unittest discover -s test -v

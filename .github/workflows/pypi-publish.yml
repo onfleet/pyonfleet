@@ -7,25 +7,34 @@ on:
   release:
     types: [published]
 
+# The token needs no write access: PyPI uses PYPI_API_TOKEN and Slack
+# uses a webhook secret.
+permissions:
+  contents: read
+
 jobs:
 
-# TODO: Run tests
-#   build:
-#     runs-on: ubuntu-latest
+  # Release gate: the shared live-API suite. Unlike ci.yml, this call is
+  # not gated on LIVE_SUITE_ENABLED — a release must never skip tests,
+  # so a missing secret fails the run loudly inside the suite.
+  test:
+    uses: ./.github/workflows/live-suite.yml
+    secrets: inherit
 
   publish:
-    #needs: build
+    needs: test
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-version: '3.12'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build
+        pip install build==1.6.1
     - name: Build package
       run: python -m build
     - name: Publish package
@@ -37,7 +46,10 @@ jobs:
   notify:
     needs: publish
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
+      # TODO: bump slack-github-action (v2+ changed the webhook inputs;
+      # the payload and SLACK_WEBHOOK_TYPE need a review with the bump).
       - uses: slackapi/slack-github-action@v1.18.0
         with:
           payload: |

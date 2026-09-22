@@ -1,11 +1,8 @@
-import sys
-sys.path.append("../onfleet")
-import onfleet
-
 import os
 import unittest
-import re
 from datetime import datetime, timedelta
+
+import onfleet
 
 
 # TODO(julian): We need to deprecate this!
@@ -21,10 +18,15 @@ class TestOnfleet(unittest.TestCase):
         self.api = onfleet.Onfleet(api_key=self.api_key)
 
     def test_authenticate(self):
+        # A bad key raises PermissionError on either call, so reaching the
+        # asserts proves authentication. The old cross-check against the
+        # auth message no longer works: the message does not embed the
+        # organization ID anymore, and the ID format is not guaranteed.
         auth_result = self.api.auth_test()
         org_result = self.api.organization.get()
-        match = re.search(r"[a-zA-Z\d]{24}", auth_result["message"])
-        self.assertTrue(match.group(0) == org_result["id"])
+        self.assertIn("message", auth_result)
+        self.assertIsInstance(org_result["id"], str)
+        self.assertTrue(org_result["id"])
 
     def test_datatype(self):
         admins_list = self.api.administrators.get()
@@ -47,7 +49,8 @@ class TestOnfleet(unittest.TestCase):
         new_admin_list_length = len(self.api.administrators.get())
         # Length of admin list should increase by 1
         self.assertTrue(old_admin_list_length + 1 == new_admin_list_length)
-        updated_result = self.api.administrators.update(id=new_admin_id, body={"name": "Onfleet Testing - Please delete"})
+        updated_result = self.api.administrators.update(
+            id=new_admin_id, body={"name": "Onfleet Testing - Please delete"})
         # Admin name should be updated
         self.assertTrue(updated_result["name"] == "Onfleet Testing - Please delete")
         deletion_result = self.api.administrators.deleteOne(id=new_admin_id)
@@ -104,12 +107,18 @@ class TestOnfleet(unittest.TestCase):
         search_result = (self.api.recipients.get(search=data))
         # Create the recipient if not exist
         if ("id" not in search_result):
-            new_recipient_data = {"name":"Boris Foster","phone":"+16505551133","notes":"Always orders our GSC special", "skipPhoneNumberValidation":"true"}
+            new_recipient_data = {
+                "name": "Boris Foster",
+                "phone": "+16505551133",
+                "notes": "Always orders our GSC special",
+                "skipPhoneNumberValidation": "true"
+            }
             new_recipient = self.api.recipients.create(body=new_recipient_data)
             recipient_id = new_recipient["id"]
         else:
             recipient_id = search_result["id"]
-        search_result_with_query = self.api.recipients.get(search=data, queryParams={"skipPhoneNumberValidation":"true"})
+        search_result_with_query = self.api.recipients.get(
+            search=data, queryParams={"skipPhoneNumberValidation": "true"})
         self.assertTrue(search_result_with_query["id"] == recipient_id)
 
 
