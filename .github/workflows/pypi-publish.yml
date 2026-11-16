@@ -50,7 +50,7 @@ jobs:
     steps:
       # TODO: bump slack-github-action (v2+ changed the webhook inputs;
       # the payload and SLACK_WEBHOOK_TYPE need a review with the bump).
-      - uses: slackapi/slack-github-action@v1.18.0
+      - uses: slackapi/slack-github-action@v4.0.0
         with:
           payload: |
             {
